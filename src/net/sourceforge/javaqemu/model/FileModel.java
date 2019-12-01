@@ -3,6 +3,9 @@ package net.sourceforge.javaqemu.model;
 import java.io.File;
 import java.io.IOException;
 
+import java.util.Map;
+import java.util.HashMap;
+
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.xml.parsers.DocumentBuilder;
@@ -17,6 +20,7 @@ import javax.xml.transform.stream.StreamResult;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
+import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
@@ -146,6 +150,8 @@ public class FileModel {
     private String execute_after_stop_qemu;
     private String qemu_img_executable_path;
     private String bios_vga_bios_keymaps_path;
+
+    private Map<String, String> data = new HashMap<>();
 
     public boolean readXML(String xml) {
         boolean fixIt = false;
@@ -1279,13 +1285,23 @@ public class FileModel {
     }
 
     private String getTextValue(Element doc, String tag) {
-        String value = null;
-        NodeList nl;
-        nl = doc.getElementsByTagName(tag);
-        if (nl.getLength() > 0 && nl.item(0).hasChildNodes()) {
-            value = nl.item(0).getFirstChild().getNodeValue();
+        if (data.containsKey(tag)) {
+            return data.get(tag);
+        } else {
+            data.put(tag, null);
         }
-        return value;
+
+        NodeList nodeList = doc.getElementsByTagName("*");
+        for (int i = 0; i < nodeList.getLength(); i++) {
+            Node node = nodeList.item(i);
+            if (node.getNodeType() == Node.ELEMENT_NODE) {
+                if (node.hasChildNodes()) {
+                    data.put(tag, node.getFirstChild().getNodeValue());
+                }
+            }
+        }
+
+        return data.get(tag);
     }
 
     public void setMachineName(String machineName) {
