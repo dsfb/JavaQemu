@@ -13,13 +13,14 @@ public class JavaQemuUtils {
 	
 	// Remove duplicate chars from given string! 
 	public static String removeDupChars(String str, String c) {
-		System.out.println("Testing removeDupChars...: " + str);
-		while (countChars(str, c) > 1) {
-			str = replaceFirst(str, c);
-			System.out.println("Testing removeDupChars...: " + str);
+		if (str == null || c == null) {
+			return "";
 		}
 		
-		System.out.println("Testing removeDupChars...: " + str);
+		while (countChars(str, c) > 1) {
+			str = replaceFirst(str, c);
+		}
+		
 		return str;
 	}
 }

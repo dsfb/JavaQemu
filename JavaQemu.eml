@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<component inheritJdk="true">
+	<exclude-output/>
+	<contentEntry url="file://$MODULE_DIR$"/>
+	<lib name="xstream-1.4.11.1.jar" scope="PROVIDED">
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/lib/xstream-1.4.11.1.jar!/"/>
+	</lib>
+</component>
