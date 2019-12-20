@@ -153,6 +153,19 @@ public class FileModel {
 
     private Map<String, String> data = new HashMap<>();
 
+    private void populateData(Element doc) {
+        data.clear();
+        NodeList nodeList = doc.getElementsByTagName("*");
+        for (int i = 0; i < nodeList.getLength(); i++) {
+            Node node = nodeList.item(i);
+            if (node.getNodeType() == Node.ELEMENT_NODE) {
+                if (node.hasChildNodes()) {
+                    data.put(node.getNodeName(), node.getFirstChild().getNodeValue());
+                }
+            }
+        }
+    }
+
     public boolean readXML(String xml) {
         boolean fixIt = false;
         boolean[] fixTasks = new boolean[4];
@@ -167,6 +180,8 @@ public class FileModel {
             dom = db.parse(xml);
 
             Element doc = dom.getDocumentElement();
+
+            this.populateData(doc);
 
             machineName = getTextValue(doc, "machineName");
             machineType = getTextValue(doc, "machineType");
@@ -1287,21 +1302,9 @@ public class FileModel {
     private String getTextValue(Element doc, String tag) {
         if (data.containsKey(tag)) {
             return data.get(tag);
-        } else {
-            data.put(tag, null);
         }
 
-        NodeList nodeList = doc.getElementsByTagName("*");
-        for (int i = 0; i < nodeList.getLength(); i++) {
-            Node node = nodeList.item(i);
-            if (node.getNodeType() == Node.ELEMENT_NODE) {
-                if (node.hasChildNodes()) {
-                    data.put(tag, node.getFirstChild().getNodeValue());
-                }
-            }
-        }
-
-        return data.get(tag);
+        return null;
     }
 
     public void setMachineName(String machineName) {
