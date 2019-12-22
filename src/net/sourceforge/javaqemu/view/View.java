@@ -197,17 +197,20 @@ public class View extends JFrame {
     }
 
     private void rechecks() {
+    	System.out.println("Repainting screen now...");
         this.pack();
         this.repaint();
     }
 
     public JPanelCreationView makeVMPanel(String machineName) {
         JPanelCreationView panel = null;
+        System.out.println("Instantiating a new JPanelCreationView");
         panel = new JPanelCreationView(machineName,
                 this.createNewVMOption,
                 this.openExistingVMOption,
                 this.listener,
                 this.useUtilities);
+        System.out.println("Instantiated a new JPanelCreationView");
         return panel;
     }
 

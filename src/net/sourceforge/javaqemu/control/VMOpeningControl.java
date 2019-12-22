@@ -11,17 +11,22 @@ public class VMOpeningControl {
 
     public VMOpeningControl(View view, EmulationControl myemulation, FileControl myfile) {
         this.mymodel = new VMOpeningModel(myemulation, myfile);
+        System.out.println("Building VMOpeningView...");
         this.myview = new VMOpeningView(view, this.mymodel.getMyfile().getMymodel().getMachineName());
+        System.out.println("Built VMOpeningView...");
     }
 
     public boolean starts(FileControl myfile) {
-        this.mymodel.starts();
+    	System.out.println("Starting VMOpeningModel...");
+        this.mymodel.starts();        
         this.myview.setChosenMachineName(myfile.getMymodel().getMachineName());
+        System.out.println("Starting VMOpeningView...");
         this.myview.starts(this.mymodel.getDiskImagePath(),
                 myfile.getMymodel().getSecondHardDiskOption(),
                 myfile.getMymodel().getThirdHardDiskOption(),
                 myfile.getMymodel().getFourthHardDiskOption(),
                 myfile.getMymodel().getRamSize());
+        System.out.println("Started VMOpeningView...");
         return true;
     }
 

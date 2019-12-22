@@ -15,6 +15,7 @@ public class VMOpeningModel {
     }
 
     public boolean starts() {
+    	System.out.println("VMOpeningModel... starting now...");
         if (this.myfile.getMymodel().getFirstHardDiskOption() != null) {
             this.myemulation.define_first_hard_disk_option(this.myfile.getMymodel()
                     .getFirstHardDiskOption());
@@ -39,7 +40,9 @@ public class VMOpeningModel {
             this.myemulation.change_options(
                     OptionsEnumModel.RAMSIZE.getValor(), "-m 128");
         }
+        System.out.println("VMOpeningModel... appending options...");
         this.myemulation.appends_options();
+        System.out.println("VMOpeningModel... appended options...");
         return true;
     }
 

@@ -152,20 +152,29 @@ public class FileModel {
     private String bios_vga_bios_keymaps_path;
 
     private Map<String, String> data = new HashMap<>();
+    private Map<String, String> dataConfig = new HashMap<>();
 
-    private void populateData(Element doc) {
-        data.clear();
+    private void populateCustomData(Element doc, Map<String, String> customData) {
+        customData.clear();
         NodeList nodeList = doc.getElementsByTagName("*");
         for (int i = 0; i < nodeList.getLength(); i++) {
             Node node = nodeList.item(i);
             if (node.getNodeType() == Node.ELEMENT_NODE) {
                 if (node.hasChildNodes()) {
-                    data.put(node.getNodeName(), node.getFirstChild().getNodeValue());
+                    customData.put(node.getNodeName(), node.getFirstChild().getNodeValue());
                 }
             }
         }
     }
+    
+    private void populateData(Element doc) {
+    	this.populateCustomData(doc, data);
+    }
 
+    private void populateDataConfig(Element doc) {
+    	this.populateCustomData(doc, dataConfig);
+    }
+    
     public boolean readXML(String xml) {
         boolean fixIt = false;
         boolean[] fixTasks = new boolean[4];
@@ -185,6 +194,7 @@ public class FileModel {
 
             machineName = getTextValue(doc, "machineName");
             machineType = getTextValue(doc, "machineType");
+            System.out.println("Reading machine type data...");
             machineAccel1 = getTextValue(doc, "machineAccel1");
             machineAccel2 = getTextValue(doc, "machineAccel2");
             machineAccel3 = getTextValue(doc, "machineAccel3");
@@ -371,8 +381,10 @@ public class FileModel {
             usbNetOption = getTextValue(doc, "usbNetOption");
             kernelBootOption = getTextValue(doc, "kernelBootOption");
             customOptions = getTextValue(doc, "customOptions");
-
+            System.out.println("Reading custom options data...");
+            
             if (fixIt) {
+            	System.out.println("Fix It task...");
                 if (fixTasks[0]) {
                     if (firstHardDiskOption != null)
                     {
@@ -400,8 +412,12 @@ public class FileModel {
                         fourthHardDiskOption = fourthHardDiskOption.replaceAll("\"", "");
                     }
                 }
-
+                
+                System.out.println("Fix It task... Saving XML file");
                 saveToXML(xml);
+                System.out.println("Fix It task... Saved XML file");
+            } else {
+            	System.out.println("No Fix It task...");
             }
 
             return true;

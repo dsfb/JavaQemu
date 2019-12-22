@@ -39,29 +39,52 @@ public class VMConfigurationControl implements ActionListener {
     public VMConfigurationControl(EmulationControl myemulation, View view,
             FileControl myfile) {
         myram = new RAMControl(myemulation, myfile);
+        System.out.println("myram is ok...");
         myview = new VMConfigurationView(view,
                 this.myram.getOption());
+        System.out.println("myview is ok...");
         mydisplay = new OptionsDisplayControl(myemulation, myfile);
+        System.out.println("mydisplay is ok...");
         myhd = new HardDiskControl(myemulation, myfile);
+        System.out.println("myhd is ok...");
         myadvancedoptions = new AdvancedOptionsControl(myemulation, myfile, view);
+        System.out.println("myadvancedoptions is ok...");
         mymachine = new MachineControl(myemulation, myfile);
+        System.out.println("mymachine is ok...");
         mycpu = new CPUControl(myemulation, myfile);
+        System.out.println("mycpu is ok...");
         mycdrom = new CDROMControl(myemulation, myfile);
+        System.out.println("mycdrom is ok...");
         myfloppy = new FloppyControl(myemulation, myfile);
+        System.out.println("myfloppy is ok...");
         myboot = new BootControl(myemulation, myfile);
+        System.out.println("myboot is ok...");
         mykeyboard = new KeyboardControl(myemulation, myfile);
+        System.out.println("mykeyboard is ok...");
         mysoundhardware = new SoundHardwareControl(myemulation, myfile);
+        System.out.println("mysoundhw is ok...");
         mysmp = new SMPControl(myemulation, myfile);
+        System.out.println("mysmp is ok...");
         mynuma = new NUMAControl(myemulation, myfile);
+        System.out.println("mynuma is ok...");
         mymemory = new MemoryControl(myemulation, myfile);
+        System.out.println("mymem is ok...");
         mynetwork = new NetworkManagerControl(myemulation, myfile);
+        System.out.println("mynet is ok...");
         mytime = new TimeControl(myemulation, myfile);
+        System.out.println("mytime is ok...");
         myimage = new ImageControl(myemulation, myfile);
+        System.out.println("myimg is ok...");
         mymonitor = new MonitorControl(myemulation, myfile);
+        System.out.println("mymon is ok...");
         myusb = new USBControl(myemulation, myfile);
+        System.out.println("myusb is ok...");
         myspecificboot = new SpecificBootControl(myemulation, myfile);
+        System.out.println("myspecboots is ok...");
         myName = new NameControl(myemulation, myfile, view);
+        System.out.println("myname is ok...");
         myCustomOptions = new CustomOptionsControl(myemulation, myfile);
+        System.out.println("mycustomopts is ok...");
     }
 
     public void starts() {

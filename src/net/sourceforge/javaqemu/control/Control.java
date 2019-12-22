@@ -238,28 +238,37 @@ public class Control implements ActionListener {
                             .getAbsolutePath());
 
                     if (this.myopening == null) {
+                    	System.out.println("Building VMOpeningControl");
                         this.myopening = new VMOpeningControl(this.view,
                                 this.myemulation, this.myfile);
+                        System.out.println("Built VMOpeningControl");
                     }
                     this.myopening.starts(this.myfile);
                     int position;
+                    System.out.println("Set position...");
                     if (this.view.getActivePanel() == 0) {
                         position = this.view.getSizeOfJTabbedPane();
                     } else {
                         position = this.view.getActivePanel();
                     }
+                    System.out.println("Position is OK...");
                     if (this.myvmcontrol.size() <= position) {
                         for (int i = this.myvmcontrol.size(); i <= position; i++) {
                             this.myvmcontrol.add(i, null);
                         }
                     }
+                    System.out.println("myvmcontrol is ok... 1");
                     if (this.myvmcontrol.get(position) == null) {
                         this.myvmcontrol.set(position,
                                 new VMConfigurationControl(this.myemulation,
                                         this.view, this.myfile));
+                        System.out.println("myvmcontrol is ok... 1.3");
                         this.myvmcontrol.get(position).starts();
+                        System.out.println("myvmcontrol is ok... 1.6");
                         this.myvmcontrol.get(position).getMyName().updateMe();
+                        System.out.println("myvmcontrol is ok... 1.9");
                     }
+                    System.out.println("myvmcontrol is ok... 2");
                 } else {
                     this.view
                             .showMessage("Please, select a valid file (*.xml)!");
