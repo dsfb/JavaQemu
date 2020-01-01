@@ -2,7 +2,7 @@ package net.sourceforge.javaqemu.model;
 
 import java.io.File;
 import java.io.IOException;
-
+import java.lang.reflect.Field;
 import java.util.Map;
 import java.util.HashMap;
 
@@ -175,6 +175,21 @@ public class FileModel {
     	this.populateCustomData(doc, dataConfig);
     }
     
+    private void setField(String field, String value) {
+    	Field f1;
+    	try {
+			f1 = this.getClass().getDeclaredField(field);
+		} catch (NoSuchFieldException | SecurityException e) {
+			return;
+		}
+		
+    	try {
+			f1.set(this, value);
+		} catch (IllegalArgumentException | IllegalAccessException e) {
+			return;
+		}
+    }
+    
     public boolean readXML(String xml) {
         boolean fixIt = false;
         boolean[] fixTasks = new boolean[4];
@@ -191,21 +206,27 @@ public class FileModel {
             Element doc = dom.getDocumentElement();
 
             this.populateData(doc);
-
-            machineName = getTextValue(doc, "machineName");
-            machineType = getTextValue(doc, "machineType");
-            System.out.println("Reading machine type data...");
-            machineAccel1 = getTextValue(doc, "machineAccel1");
-            machineAccel2 = getTextValue(doc, "machineAccel2");
-            machineAccel3 = getTextValue(doc, "machineAccel3");
-            machineKernel_irpchip = getTextValue(doc, "machineKernel_irpchip");
-            machineKvm_shadow_mem = getTextValue(doc, "machineKvm_shadow_mem");
-            machineDump_guest_core = getTextValue(doc, "machineDump_guest_core");
-            machineMem_merge = getTextValue(doc, "machineMem_merge");
-            cpuModel = getTextValue(doc, "cpuModel");
-            cpuidFlags = getTextValue(doc, "cpuidFlags");
-            cdrom = getTextValue(doc, "cdrom");
-
+            
+            String[] attribs = {"machineName", "machineType", "machineAccel1", 
+            		"machineAccel2", "machineAccel3", "machineKernel_irpchip",
+            		"machineKvm_shadow_mem", "machineKernel_irpchip",
+            		"machineKvm_shadow_mem", "machineDump_guest_core",
+            		"machineMem_merge", "cpuModel", "cpuidFlags", "cdrom",
+            		"floppyDiskA", "floppyDiskB", "bootOrder1", "bootOrder2",
+            		"bootOrder3", "bootOnce1", "bootOnce2", "bootOnce3",
+            		"bootMenu", "bootSplash", "bootSplashTime", "diskPath", 
+            		"bootRebootTimeout", "bootStrict", 
+            		"keyboardLayoutLanguage", "secondDiskImagePath",
+            		"thirdDiskImagePath", "fourthDiskImagePath",
+            		"ramSize", "displayType", 
+            		"nographicOption", "vgaType", "fullscreenOption",
+        			"win2khackOption", "noacpiOption", "soundHardwareOption"};
+        	
+            for (String attr : attribs) {
+            	setField(attr, getTextValue(doc, attr));            	
+            }
+            
+            // Custom reading fields subroutine...!
             if (cdrom != null) {
                 if (cdrom.contains("\"")) {
                     if (!fixIt) {
@@ -214,22 +235,8 @@ public class FileModel {
                     cdrom = cdrom.replaceAll("\"", "");
                 }
             }
-
-            floppyDiskA = getTextValue(doc, "floppyDiskA");
-            floppyDiskB = getTextValue(doc, "floppyDiskB");
-            bootOrder1 = getTextValue(doc, "bootOrder1");
-            bootOrder2 = getTextValue(doc, "bootOrder2");
-            bootOrder3 = getTextValue(doc, "bootOrder3");
-            bootOnce1 = getTextValue(doc, "bootOnce1");
-            bootOnce2 = getTextValue(doc, "bootOnce2");
-            bootOnce3 = getTextValue(doc, "bootOnce3");
-            bootMenu = getTextValue(doc, "bootMenu");
-            bootSplash = getTextValue(doc, "bootSplash");
-            bootSplashTime = getTextValue(doc, "bootSplashTime");
-            bootRebootTimeout = getTextValue(doc, "bootRebootTimeout");
-            bootStrict = getTextValue(doc, "bootStrict");
-            keyboardLayoutLanguage = getTextValue(doc, "keyboardLayoutLanguage");
-            firstHardDiskOption = getTextValue(doc, "diskPath"); // Deprecated definition.
+            
+            // Deprecated definition: "diskPath"...
             if (firstHardDiskOption == null) {
                 firstHardDiskOption = getTextValue(doc, "diskImagePath"); // Deprecated definition.
             }
@@ -245,7 +252,7 @@ public class FileModel {
                 }
             }
 
-            secondHardDiskOption = getTextValue(doc, "secondDiskImagePath"); // Deprecated definition.
+            // Deprecated definition: "secondDiskImagePath"...
             if (secondHardDiskOption == null) {
                 secondHardDiskOption = getTextValue(doc, "secondHardDiskOption"); // Standard definition.
             }
@@ -258,7 +265,7 @@ public class FileModel {
                 }
             }
 
-            thirdHardDiskOption = getTextValue(doc, "thirdDiskImagePath"); // Deprecated definition.
+            // Deprecated definition: "thirdDiskImagePath"...
             if (thirdHardDiskOption == null) {
                 thirdHardDiskOption = getTextValue(doc, "thirdHardDiskOption"); // Standard definition.
             }
@@ -271,12 +278,12 @@ public class FileModel {
                 }
             }
 
-            fourthHardDiskOption = getTextValue(doc, "fourthDiskImagePath"); // Deprecated definition.
+            // Deprecated definition: "fourthDiskImagePath"...
             if (fourthHardDiskOption == null) {
                 fourthHardDiskOption = getTextValue(doc, "fourthHardDiskOption"); // Standard definition.
             }
-            if (thirdHardDiskOption != null) {
-                if (thirdHardDiskOption.contains("\"")) {
+            if (fourthHardDiskOption != null) {
+                if (fourthHardDiskOption.contains("\"")) {
                     if (!fixIt) {
                         fixIt = true;
                     }
@@ -284,14 +291,6 @@ public class FileModel {
                 }
             }
 
-            ramSize = getTextValue(doc, "ramSize");
-            displayType = getTextValue(doc, "displayType");
-            nographicOption = getTextValue(doc, "nographicOption");
-            vgaType = getTextValue(doc, "vgaType");
-            fullscreenOption = getTextValue(doc, "fullscreenOption");
-            win2khackOption = getTextValue(doc, "win2khackOption");
-            noacpiOption = getTextValue(doc, "noacpiOption");
-            soundHardwareOption = getTextValue(doc, "soundHardwareOption");
             smpCpusNumber = getTextValue(doc, "smpCpusNumber");
             smpCoresNumber = getTextValue(doc, "smpCoresNumber");
             smpThreadsNumber = getTextValue(doc, "smpThreadsNumber");
@@ -446,12 +445,14 @@ public class FileModel {
 
             Element doc = dom.getDocumentElement();
 
-            defaultVMPath = getTextValue(doc, "defaultVMPath");
-            execute_before_start_qemu = getTextValue(doc, "execute_before_start_qemu");
-            qemu_executable_path = getTextValue(doc, "qemu_executable_path");
-            execute_after_stop_qemu = getTextValue(doc, "execute_after_stop_qemu");
-            qemu_img_executable_path = getTextValue(doc, "qemu_img_executable_path");
-            bios_vga_bios_keymaps_path = getTextValue(doc, "bios_vga_bios_keymaps_path");
+            this.populateDataConfig(doc);
+            
+            defaultVMPath = getConfigTextValue(doc, "defaultVMPath");
+            execute_before_start_qemu = getConfigTextValue(doc, "execute_before_start_qemu");
+            qemu_executable_path = getConfigTextValue(doc, "qemu_executable_path");
+            execute_after_stop_qemu = getConfigTextValue(doc, "execute_after_stop_qemu");
+            qemu_img_executable_path = getConfigTextValue(doc, "qemu_img_executable_path");
+            bios_vga_bios_keymaps_path = getConfigTextValue(doc, "bios_vga_bios_keymaps_path");
             return true;
 
         } catch (ParserConfigurationException pce) {
@@ -1315,7 +1316,7 @@ public class FileModel {
         }
     }
 
-    private String getTextValue(Element doc, String tag) {
+    private String getCustomTextValue(Element doc, String tag, Map<String, String> data) {
         if (data.containsKey(tag)) {
             return data.get(tag);
         }
@@ -1323,6 +1324,14 @@ public class FileModel {
         return null;
     }
 
+    private String getTextValue(Element doc, String tag) {
+    	return this.getCustomTextValue(doc, tag, data);
+    }
+    
+    private String getConfigTextValue(Element doc, String tag) {
+    	return this.getCustomTextValue(doc, tag, dataConfig);
+    }
+    
     public void setMachineName(String machineName) {
         this.machineName = machineName;
     }
