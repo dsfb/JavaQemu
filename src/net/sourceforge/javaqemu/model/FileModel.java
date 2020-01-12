@@ -220,7 +220,25 @@ public class FileModel {
             		"thirdDiskImagePath", "fourthDiskImagePath",
             		"ramSize", "displayType", 
             		"nographicOption", "vgaType", "fullscreenOption",
-        			"win2khackOption", "noacpiOption", "soundHardwareOption"};
+        			"win2khackOption", "noacpiOption", "soundHardwareOption", 
+        			"smpCpusNumber", "smpCoresNumber", "smpThreadsNumber", 
+        			"smpSocketsNumber", "smpCpusMaxNumber", "firstNumaNodeMem", 
+        			"firstNumaNodeCpus", "secondNumaNodeMem", "secondNumaNodeCpus", 
+        			"thirdNumaNodeMem", "thirdNumaNodeCpus", "fourthNumaNodeMem", 
+        			"fourthNumaNodeCpus", "fifthNumaNodeMem", "fifthNumaNodeCpus", 
+        			"sixthNumaNodeMem", "sixthNumaNodeCpus", "seventhNumaNodeMem", 
+        			"seventhNumaNodeCpus", "eighthNumaNodeMem", "eighthNumaNodeCpus", 
+        			"ninthNumaNodeMem", "ninthNumaNodeCpus", "tenthNumaNodeMem", 
+        			"tenthNumaNodeCpus", "noFrameOption", "memPathOption", 
+        			"smpCpusNumber", "smpCoresNumber", "smpThreadsNumber", 
+        			"smpSocketsNumber", "smpCpusMaxNumber", "firstNumaNodeMem", 
+        			"firstNumaNodeCpus", "secondNumaNodeMem", "secondNumaNodeCpus", 
+        			"thirdNumaNodeMem", "thirdNumaNodeCpus", "fourthNumaNodeMem", 
+        			"fourthNumaNodeCpus", "fifthNumaNodeMem", "fifthNumaNodeCpus", 
+        			"sixthNumaNodeMem", "sixthNumaNodeCpus", "seventhNumaNodeMem", 
+        			"seventhNumaNodeCpus", "eighthNumaNodeMem", "eighthNumaNodeCpus", 
+        			"ninthNumaNodeMem", "ninthNumaNodeCpus", "tenthNumaNodeMem", 
+        			"tenthNumaNodeCpus", "noFrameOption", "memPathOption"};
         	
             for (String attr : attribs) {
             	setField(attr, getTextValue(doc, attr));            	
@@ -291,34 +309,6 @@ public class FileModel {
                 }
             }
 
-            smpCpusNumber = getTextValue(doc, "smpCpusNumber");
-            smpCoresNumber = getTextValue(doc, "smpCoresNumber");
-            smpThreadsNumber = getTextValue(doc, "smpThreadsNumber");
-            smpSocketsNumber = getTextValue(doc, "smpSocketsNumber");
-            smpCpusMaxNumber = getTextValue(doc, "smpCpusMaxNumber");
-            firstNumaNodeMem = getTextValue(doc, "firstNumaNodeMem");
-            firstNumaNodeCpus = getTextValue(doc, "firstNumaNodeCpus");
-            secondNumaNodeMem = getTextValue(doc, "secondNumaNodeMem");
-            secondNumaNodeCpus = getTextValue(doc, "secondNumaNodeCpus");
-            thirdNumaNodeMem = getTextValue(doc, "thirdNumaNodeMem");
-            thirdNumaNodeCpus = getTextValue(doc, "thirdNumaNodeCpus");
-            fourthNumaNodeMem = getTextValue(doc, "fourthNumaNodeMem");
-            fourthNumaNodeCpus = getTextValue(doc, "fourthNumaNodeCpus");
-            fifthNumaNodeMem = getTextValue(doc, "fifthNumaNodeMem");
-            fifthNumaNodeCpus = getTextValue(doc, "fifthNumaNodeCpus");
-            sixthNumaNodeMem = getTextValue(doc, "sixthNumaNodeMem");
-            sixthNumaNodeCpus = getTextValue(doc, "sixthNumaNodeCpus");
-            seventhNumaNodeMem = getTextValue(doc, "seventhNumaNodeMem");
-            seventhNumaNodeCpus = getTextValue(doc, "seventhNumaNodeCpus");
-            eighthNumaNodeMem = getTextValue(doc, "eighthNumaNodeMem");
-            eighthNumaNodeCpus = getTextValue(doc, "eighthNumaNodeCpus");
-            ninthNumaNodeMem = getTextValue(doc, "ninthNumaNodeMem");
-            ninthNumaNodeCpus = getTextValue(doc, "ninthNumaNodeCpus");
-            tenthNumaNodeMem = getTextValue(doc, "tenthNumaNodeMem");
-            tenthNumaNodeCpus = getTextValue(doc, "tenthNumaNodeCpus");
-            noFrameOption = getTextValue(doc, "noFrameOption");
-            memPathOption = getTextValue(doc, "memPathOption");
-
             if (memPathOption != null) {
                 if (memPathOption.contains("\"")) {
                     if (!fixIt) {
@@ -328,58 +318,6 @@ public class FileModel {
                 }
             }
 
-            memPreallocOption = getTextValue(doc, "memPreallocOption");
-            firstNetworkNICOption = getTextValue(doc, "firstNetworkNICOption");
-            firstNetworkExtraOption = getTextValue(doc, "firstNetworkExtraOption");
-            firstNetworkNetdevOption = getTextValue(doc, "firstNetworkNetdevOption");
-            secondNetworkNICOption = getTextValue(doc, "secondNetworkNICOption");
-            secondNetworkExtraOption = getTextValue(doc, "secondNetworkExtraOption");
-            secondNetworkNetdevOption = getTextValue(doc, "secondNetworkNetdevOption");
-            thirdNetworkNICOption = getTextValue(doc, "thirdNetworkNICOption");
-            thirdNetworkExtraOption = getTextValue(doc, "thirdNetworkExtraOption");
-            thirdNetworkNetdevOption = getTextValue(doc, "thirdNetworkNetdevOption");
-            fourthNetworkNICOption = getTextValue(doc, "fourthNetworkNICOption");
-            fourthNetworkExtraOption = getTextValue(doc, "fourthNetworkExtraOption");
-            fourthNetworkNetdevOption = getTextValue(doc, "fourthNetworkNetdevOption");
-            fifthNetworkNICOption = getTextValue(doc, "fifthNetworkNICOption");
-            fifthNetworkExtraOption = getTextValue(doc, "fifthNetworkExtraOption");
-            fifthNetworkNetdevOption = getTextValue(doc, "fifthNetworkNetdevOption");
-            sixthNetworkNICOption = getTextValue(doc, "sixthNetworkNICOption");
-            sixthNetworkExtraOption = getTextValue(doc, "sixthNetworkExtraOption");
-            sixthNetworkNetdevOption = getTextValue(doc, "sixthNetworkNetdevOption");
-            seventhNetworkNICOption = getTextValue(doc, "seventhNetworkNICOption");
-            seventhNetworkExtraOption = getTextValue(doc, "seventhNetworkExtraOption");
-            seventhNetworkNetdevOption = getTextValue(doc, "seventhNetworkNetdevOption");
-            eighthNetworkNICOption = getTextValue(doc, "eighthNetworkNICOption");
-            eighthNetworkExtraOption = getTextValue(doc, "eighthNetworkExtraOption");
-            eighthNetworkNetdevOption = getTextValue(doc, "eighthNetworkNetdevOption");
-            ninthNetworkNICOption = getTextValue(doc, "ninthNetworkNICOption");
-            ninthNetworkExtraOption = getTextValue(doc, "ninthNetworkExtraOption");
-            ninthNetworkNetdevOption = getTextValue(doc, "ninthNetworkNetdevOption");
-            tenthNetworkNICOption = getTextValue(doc, "tenthNetworkNICOption");
-            tenthNetworkExtraOption = getTextValue(doc, "tenthNetworkExtraOption");
-            tenthNetworkNetdevOption = getTextValue(doc, "tenthNetworkNetdevOption");
-            rtcOption = getTextValue(doc, "rtcOption");
-            nameOption = getTextValue(doc, "nameOption");
-            snapshotOption = getTextValue(doc, "snapshotOption");
-            noFdBootchkOption = getTextValue(doc, "noFdBootchkOption");
-            noHpetOption = getTextValue(doc, "noHpetOption");
-            mtdblockOption = getTextValue(doc, "mtdblockOption");
-            sdOption = getTextValue(doc, "sdOption");
-            pflashOption = getTextValue(doc, "pflashOption");
-            monitorOption = getTextValue(doc, "monitorOption");
-            qmpOption = getTextValue(doc, "qmpOption");
-            usbDriverOption = getTextValue(doc, "usbDriverOption");
-            usbMouseOption = getTextValue(doc, "usbMouseOption");
-            usbTabletOption = getTextValue(doc, "usbTabletOption");
-            usbWacomTabletOption = getTextValue(doc, "usbWacomTabletOption");
-            usbKeyboardOption = getTextValue(doc, "usbKeyboardOption");
-            usbBrailleOption = getTextValue(doc, "usbBrailleOption");
-            usbDiskOption = getTextValue(doc, "usbDiskOption");
-            usbSerialOption = getTextValue(doc, "usbSerialOption");
-            usbNetOption = getTextValue(doc, "usbNetOption");
-            kernelBootOption = getTextValue(doc, "kernelBootOption");
-            customOptions = getTextValue(doc, "customOptions");
             System.out.println("Reading custom options data...");
             
             if (fixIt) {
