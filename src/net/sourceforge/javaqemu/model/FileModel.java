@@ -180,19 +180,68 @@ public class FileModel {
     	try {
 			f1 = this.getClass().getDeclaredField(field);
 		} catch (NoSuchFieldException | SecurityException e) {
+			e.printStackTrace();
 			return;
 		}
 		
     	try {
 			f1.set(this, value);
 		} catch (IllegalArgumentException | IllegalAccessException e) {
+			e.printStackTrace();
 			return;
 		}
     }
     
+    private String getField(String field) {
+    	Field f1;
+    	try {
+    		f1 = this.getClass().getDeclaredField(field);
+    	} catch (NoSuchFieldException | SecurityException e) {
+			return "";
+		}
+    	
+    	try {
+    		return (String) f1.get(this);
+    	} catch (IllegalAccessException | IllegalArgumentException | SecurityException e) {
+    		e.printStackTrace();
+			return "";
+		}
+    }
+    
+    private static String[] attribs = {"machineName", "machineType", "machineAccel1", 
+    		"machineAccel2", "machineAccel3", "machineKernel_irpchip",
+    		"machineKvm_shadow_mem", "machineKernel_irpchip",
+    		"machineKvm_shadow_mem", "machineDump_guest_core",
+    		"machineMem_merge", "cpuModel", "cpuidFlags", "cdrom",
+    		"floppyDiskA", "floppyDiskB", "bootOrder1", "bootOrder2",
+    		"bootOrder3", "bootOnce1", "bootOnce2", "bootOnce3",
+    		"bootMenu", "bootSplash", "bootSplashTime", "firstHardDiskOption", 
+    		"bootRebootTimeout", "bootStrict", 
+    		"keyboardLayoutLanguage", "secondHardDiskOption",
+    		"thirdHardDiskOption", "fourthHardDiskOption",
+    		"ramSize", "displayType", 
+    		"nographicOption", "vgaType", "fullscreenOption",
+			"win2khackOption", "noacpiOption", "soundHardwareOption", 
+			"smpCpusNumber", "smpCoresNumber", "smpThreadsNumber", 
+			"smpSocketsNumber", "smpCpusMaxNumber", "firstNumaNodeMem", 
+			"firstNumaNodeCpus", "secondNumaNodeMem", "secondNumaNodeCpus", 
+			"thirdNumaNodeMem", "thirdNumaNodeCpus", "fourthNumaNodeMem", 
+			"fourthNumaNodeCpus", "fifthNumaNodeMem", "fifthNumaNodeCpus", 
+			"sixthNumaNodeMem", "sixthNumaNodeCpus", "seventhNumaNodeMem", 
+			"seventhNumaNodeCpus", "eighthNumaNodeMem", "eighthNumaNodeCpus", 
+			"ninthNumaNodeMem", "ninthNumaNodeCpus", "tenthNumaNodeMem", 
+			"tenthNumaNodeCpus", "noFrameOption", "memPathOption", 
+			"smpCpusNumber", "smpCoresNumber", "smpThreadsNumber", 
+			"smpSocketsNumber", "smpCpusMaxNumber", "firstNumaNodeMem", 
+			"firstNumaNodeCpus", "secondNumaNodeMem", "secondNumaNodeCpus", 
+			"thirdNumaNodeMem", "thirdNumaNodeCpus", "fourthNumaNodeMem", 
+			"fourthNumaNodeCpus", "fifthNumaNodeMem", "fifthNumaNodeCpus", 
+			"sixthNumaNodeMem", "sixthNumaNodeCpus", "seventhNumaNodeMem", 
+			"seventhNumaNodeCpus", "eighthNumaNodeMem", "eighthNumaNodeCpus", 
+			"ninthNumaNodeMem", "ninthNumaNodeCpus", "tenthNumaNodeMem", 
+			"tenthNumaNodeCpus", "noFrameOption", "memPathOption"};
+    
     public boolean readXML(String xml) {
-        boolean fixIt = false;
-        boolean[] fixTasks = new boolean[4];
         Document dom;
         // Make an instance of the DocumentBuilderFactory
         DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
@@ -206,159 +255,66 @@ public class FileModel {
             Element doc = dom.getDocumentElement();
 
             this.populateData(doc);
-            
-            String[] attribs = {"machineName", "machineType", "machineAccel1", 
-            		"machineAccel2", "machineAccel3", "machineKernel_irpchip",
-            		"machineKvm_shadow_mem", "machineKernel_irpchip",
-            		"machineKvm_shadow_mem", "machineDump_guest_core",
-            		"machineMem_merge", "cpuModel", "cpuidFlags", "cdrom",
-            		"floppyDiskA", "floppyDiskB", "bootOrder1", "bootOrder2",
-            		"bootOrder3", "bootOnce1", "bootOnce2", "bootOnce3",
-            		"bootMenu", "bootSplash", "bootSplashTime", "diskPath", 
-            		"bootRebootTimeout", "bootStrict", 
-            		"keyboardLayoutLanguage", "secondDiskImagePath",
-            		"thirdDiskImagePath", "fourthDiskImagePath",
-            		"ramSize", "displayType", 
-            		"nographicOption", "vgaType", "fullscreenOption",
-        			"win2khackOption", "noacpiOption", "soundHardwareOption", 
-        			"smpCpusNumber", "smpCoresNumber", "smpThreadsNumber", 
-        			"smpSocketsNumber", "smpCpusMaxNumber", "firstNumaNodeMem", 
-        			"firstNumaNodeCpus", "secondNumaNodeMem", "secondNumaNodeCpus", 
-        			"thirdNumaNodeMem", "thirdNumaNodeCpus", "fourthNumaNodeMem", 
-        			"fourthNumaNodeCpus", "fifthNumaNodeMem", "fifthNumaNodeCpus", 
-        			"sixthNumaNodeMem", "sixthNumaNodeCpus", "seventhNumaNodeMem", 
-        			"seventhNumaNodeCpus", "eighthNumaNodeMem", "eighthNumaNodeCpus", 
-        			"ninthNumaNodeMem", "ninthNumaNodeCpus", "tenthNumaNodeMem", 
-        			"tenthNumaNodeCpus", "noFrameOption", "memPathOption", 
-        			"smpCpusNumber", "smpCoresNumber", "smpThreadsNumber", 
-        			"smpSocketsNumber", "smpCpusMaxNumber", "firstNumaNodeMem", 
-        			"firstNumaNodeCpus", "secondNumaNodeMem", "secondNumaNodeCpus", 
-        			"thirdNumaNodeMem", "thirdNumaNodeCpus", "fourthNumaNodeMem", 
-        			"fourthNumaNodeCpus", "fifthNumaNodeMem", "fifthNumaNodeCpus", 
-        			"sixthNumaNodeMem", "sixthNumaNodeCpus", "seventhNumaNodeMem", 
-        			"seventhNumaNodeCpus", "eighthNumaNodeMem", "eighthNumaNodeCpus", 
-        			"ninthNumaNodeMem", "ninthNumaNodeCpus", "tenthNumaNodeMem", 
-        			"tenthNumaNodeCpus", "noFrameOption", "memPathOption"};
-        	
+
             for (String attr : attribs) {
             	setField(attr, getTextValue(doc, attr));            	
             }
-            
+
             // Custom reading fields subroutine...!
             if (cdrom != null) {
-                if (cdrom.contains("\"")) {
-                    if (!fixIt) {
-                        fixIt = true;
-                    }
-                    cdrom = cdrom.replaceAll("\"", "");
-                }
+            	cdrom = cdrom.replaceAll("\"", "");
             }
-            
-            // Deprecated definition: "diskPath"...
+
             if (firstHardDiskOption == null) {
-                firstHardDiskOption = getTextValue(doc, "diskImagePath"); // Deprecated definition.
+                firstHardDiskOption = getTextValue(doc, "diskPath"); // Deprecated definition.
             }
+
             if (firstHardDiskOption == null) {
-                firstHardDiskOption = getTextValue(doc, "firstHardDiskOption"); // Standard definition.
+                firstHardDiskOption = getTextValue(doc, "diskImagePath"); // Another deprecated definition.
             }
+
             if (firstHardDiskOption != null) {
-                if (firstHardDiskOption.contains("\"")) {
-                    if (!fixIt) {
-                        fixIt = true;
-                    }
-                    fixTasks[0] = true;
-                }
+            	firstHardDiskOption = firstHardDiskOption.replaceAll("\"", "");
             }
 
             // Deprecated definition: "secondDiskImagePath"...
             if (secondHardDiskOption == null) {
-                secondHardDiskOption = getTextValue(doc, "secondHardDiskOption"); // Standard definition.
+                secondHardDiskOption = getTextValue(doc, "secondDiskImagePath"); // Standard definition.
             }
+
             if (secondHardDiskOption != null) {
-                if (secondHardDiskOption.contains("\"")) {
-                    if (!fixIt) {
-                        fixIt = true;
-                    }
-                    fixTasks[1] = true;
-                }
+            	secondHardDiskOption = secondHardDiskOption.replaceAll("\"", "");
             }
 
             // Deprecated definition: "thirdDiskImagePath"...
             if (thirdHardDiskOption == null) {
-                thirdHardDiskOption = getTextValue(doc, "thirdHardDiskOption"); // Standard definition.
+                thirdHardDiskOption = getTextValue(doc, "thirdDiskImagePath"); // Standard definition.
             }
+
             if (thirdHardDiskOption != null) {
-                if (thirdHardDiskOption.contains("\"")) {
-                    if (!fixIt) {
-                        fixIt = true;
-                    }
-                    fixTasks[2] = true;
-                }
+            	thirdHardDiskOption = thirdHardDiskOption.replaceAll("\"", "");
             }
 
             // Deprecated definition: "fourthDiskImagePath"...
             if (fourthHardDiskOption == null) {
-                fourthHardDiskOption = getTextValue(doc, "fourthHardDiskOption"); // Standard definition.
+                fourthHardDiskOption = getTextValue(doc, "fourthDiskImagePath"); // Standard definition.
             }
+
             if (fourthHardDiskOption != null) {
-                if (fourthHardDiskOption.contains("\"")) {
-                    if (!fixIt) {
-                        fixIt = true;
-                    }
-                    fixTasks[3] = true;
-                }
+            	fourthHardDiskOption = fourthHardDiskOption.replaceAll("\"", "");
             }
 
             if (memPathOption != null) {
-                if (memPathOption.contains("\"")) {
-                    if (!fixIt) {
-                        fixIt = true;
-                    }
-                    memPathOption = memPathOption.replaceAll("\"", "");
-                }
+            	memPathOption = memPathOption.replaceAll("\"", "");
             }
 
-            System.out.println("Reading custom options data...");
+            System.out.println("Read custom options data...");
             
-            if (fixIt) {
-            	System.out.println("Fix It task...");
-                if (fixTasks[0]) {
-                    if (firstHardDiskOption != null)
-                    {
-                        firstHardDiskOption = firstHardDiskOption.replaceAll("\"", "");
-                    }
-                }
-
-                if (fixTasks[1]) {
-                    if (secondHardDiskOption != null)
-                    {
-                        secondHardDiskOption = secondHardDiskOption.replaceAll("\"", "");
-                    }
-                }
-
-                if (fixTasks[2]) {
-                    if (thirdHardDiskOption != null)
-                    {                        
-                        thirdHardDiskOption = thirdHardDiskOption.replaceAll("\"", "");
-                    }
-                }
-
-                if (fixTasks[3]) {
-                    if (fourthHardDiskOption != null)
-                    {
-                        fourthHardDiskOption = fourthHardDiskOption.replaceAll("\"", "");
-                    }
-                }
-                
-                System.out.println("Fix It task... Saving XML file");
-                saveToXML(xml);
-                System.out.println("Fix It task... Saved XML file");
-            } else {
-            	System.out.println("No Fix It task...");
-            }
+            System.out.println("Saving XML file");
+            saveToXML(xml);
+            System.out.println("Saved XML file");
 
             return true;
-
         } catch (ParserConfigurationException pce) {
             System.out.println(pce.getMessage());
         } catch (SAXException se) {
@@ -422,725 +378,14 @@ public class FileModel {
             Element rootEle = dom.createElement("JavaQemuMachine");
 
             // create data elements and place them under root
-            if (machineName != null) {
-                e = dom.createElement("machineName");
-                e.appendChild(dom.createTextNode(machineName));
-                rootEle.appendChild(e);
-            }
-
-            if (machineType != null) {
-                e = dom.createElement("machineType");
-                e.appendChild(dom.createTextNode(machineType));
-                rootEle.appendChild(e);
-            }
-
-            if (machineAccel1 != null) {
-                e = dom.createElement("machineAccel1");
-                e.appendChild(dom.createTextNode(machineAccel1));
-                rootEle.appendChild(e);
-            }
-
-            if (machineAccel2 != null) {
-                e = dom.createElement("machineAccel2");
-                e.appendChild(dom.createTextNode(machineAccel2));
-                rootEle.appendChild(e);
-            }
-
-            if (machineAccel3 != null) {
-                e = dom.createElement("machineAccel3");
-                e.appendChild(dom.createTextNode(machineAccel3));
-                rootEle.appendChild(e);
-            }
-
-            if (machineKernel_irpchip != null) {
-                e = dom.createElement("machineKernel_irpchip");
-                e.appendChild(dom.createTextNode(machineKernel_irpchip));
-                rootEle.appendChild(e);
-            }
-
-            if (machineKvm_shadow_mem != null) {
-                e = dom.createElement("machineKvm_shadow_mem");
-                e.appendChild(dom.createTextNode(machineKvm_shadow_mem));
-                rootEle.appendChild(e);
-            }
-
-            if (machineDump_guest_core != null) {
-                e = dom.createElement("machineDump_guest_core");
-                e.appendChild(dom.createTextNode(machineDump_guest_core));
-                rootEle.appendChild(e);
-            }
-
-            if (machineMem_merge != null) {
-                e = dom.createElement("machineMem_merge");
-                e.appendChild(dom.createTextNode(machineMem_merge));
-                rootEle.appendChild(e);
-            }
-
-            if (cpuModel != null) {
-                e = dom.createElement("cpuModel");
-                e.appendChild(dom.createTextNode(cpuModel));
-                rootEle.appendChild(e);
-            }
-
-            if (cpuidFlags != null) {
-                e = dom.createElement("cpuidFlags");
-                e.appendChild(dom.createTextNode(cpuidFlags));
-                rootEle.appendChild(e);
-            }
-
-            if (cdrom != null) {
-                if (cdrom.contains("\"")) {
-                    cdrom = cdrom.replaceAll("\"", "");
-                }
-                e = dom.createElement("cdrom");
-                e.appendChild(dom.createTextNode(cdrom));
-                rootEle.appendChild(e);
-            }
-
-            if (floppyDiskA != null) {
-                e = dom.createElement("floppyDiskA");
-                e.appendChild(dom.createTextNode(floppyDiskA));
-                rootEle.appendChild(e);
-            }
-
-            if (floppyDiskB != null) {
-                e = dom.createElement("floppyDiskB");
-                e.appendChild(dom.createTextNode(floppyDiskB));
-                rootEle.appendChild(e);
-            }
-
-            if (bootOrder1 != null) {
-                e = dom.createElement("bootOrder1");
-                e.appendChild(dom.createTextNode(bootOrder1));
-                rootEle.appendChild(e);
-            }
-
-            if (bootOrder2 != null) {
-                e = dom.createElement("bootOrder2");
-                e.appendChild(dom.createTextNode(bootOrder2));
-                rootEle.appendChild(e);
-            }
-
-            if (bootOrder3 != null) {
-                e = dom.createElement("bootOrder3");
-                e.appendChild(dom.createTextNode(bootOrder3));
-                rootEle.appendChild(e);
-            }
-
-            if (bootOnce1 != null) {
-                e = dom.createElement("bootOnce1");
-                e.appendChild(dom.createTextNode(bootOnce1));
-                rootEle.appendChild(e);
-            }
-
-            if (bootOnce2 != null) {
-                e = dom.createElement("bootOnce2");
-                e.appendChild(dom.createTextNode(bootOnce2));
-                rootEle.appendChild(e);
-            }
-
-            if (bootOnce3 != null) {
-                e = dom.createElement("bootOnce3");
-                e.appendChild(dom.createTextNode(bootOnce3));
-                rootEle.appendChild(e);
-            }
-
-            if (bootMenu != null) {
-                e = dom.createElement("bootMenu");
-                e.appendChild(dom.createTextNode(bootMenu));
-                rootEle.appendChild(e);
-            }
-
-            if (bootSplash != null) {
-                e = dom.createElement("bootSplash");
-                e.appendChild(dom.createTextNode(bootSplash));
-                rootEle.appendChild(e);
-            }
-
-            if (bootSplashTime != null) {
-                e = dom.createElement("bootSplashTime");
-                e.appendChild(dom.createTextNode(bootSplashTime));
-                rootEle.appendChild(e);
-            }
-
-            if (bootRebootTimeout != null) {
-                e = dom.createElement("bootRebootTimeout");
-                e.appendChild(dom.createTextNode(bootRebootTimeout));
-                rootEle.appendChild(e);
-            }
-
-            if (bootStrict != null) {
-                e = dom.createElement("bootStrict");
-                e.appendChild(dom.createTextNode(bootStrict));
-                rootEle.appendChild(e);
-            }
-
-            if (keyboardLayoutLanguage != null) {
-                e = dom.createElement("keyboardLayoutLanguage");
-                e.appendChild(dom.createTextNode(keyboardLayoutLanguage));
-                rootEle.appendChild(e);
-            }
-
-            if (firstHardDiskOption != null) {
-                if (firstHardDiskOption.contains("\"")) {
-                    firstHardDiskOption = firstHardDiskOption.replaceAll("\"", "");
-                }
-                //e = dom.createElement("diskPath"); // deprecated
-                e = dom.createElement("firstHardDiskOption");
-                e.appendChild(dom.createTextNode(firstHardDiskOption));
-                rootEle.appendChild(e);
-            }
-
-            if (secondHardDiskOption != null) {
-                if (secondHardDiskOption.contains("\"")) {
-                    secondHardDiskOption = secondHardDiskOption.replaceAll("\"", "");
-                }
-                e = dom.createElement("secondHardDiskOption");
-                e.appendChild(dom.createTextNode(secondHardDiskOption));
-                rootEle.appendChild(e);
-            }
-
-            if (thirdHardDiskOption != null) {
-                if (thirdHardDiskOption.contains("\"")) {
-                    thirdHardDiskOption = thirdHardDiskOption.replaceAll("\"", "");
-                }
-                e = dom.createElement("thirdHardDiskOption");
-                e.appendChild(dom.createTextNode(thirdHardDiskOption));
-                rootEle.appendChild(e);
-            }
-
-            if (fourthHardDiskOption != null) {
-                if (fourthHardDiskOption.contains("\"")) {
-                    fourthHardDiskOption = fourthHardDiskOption.replaceAll("\"", "");
-                }
-                e = dom.createElement("fourthHardDiskOption");
-                e.appendChild(dom.createTextNode(fourthHardDiskOption));
-                rootEle.appendChild(e);
-            }
-
-            if (ramSize != null) {
-                e = dom.createElement("ramSize");
-                e.appendChild(dom.createTextNode(ramSize));
-                rootEle.appendChild(e);
-            }
-
-            if (displayType != null) {
-                e = dom.createElement("displayType");
-                e.appendChild(dom.createTextNode(displayType));
-                rootEle.appendChild(e);
-            }
-
-            if (nographicOption != null) {
-                e = dom.createElement("nographicOption");
-                e.appendChild(dom.createTextNode(nographicOption));
-                rootEle.appendChild(e);
-            }
-
-            if (vgaType != null) {
-                e = dom.createElement("vgaType");
-                e.appendChild(dom.createTextNode(vgaType));
-                rootEle.appendChild(e);
-            }
-
-            if (fullscreenOption != null) {
-                e = dom.createElement("fullscreenOption");
-                e.appendChild(dom.createTextNode(fullscreenOption));
-                rootEle.appendChild(e);
-            }
-
-            if (win2khackOption != null) {
-                e = dom.createElement("win2khackOption");
-                e.appendChild(dom.createTextNode(win2khackOption));
-                rootEle.appendChild(e);
-            }
-
-            if (noacpiOption != null) {
-                e = dom.createElement("noacpiOption");
-                e.appendChild(dom.createTextNode(noacpiOption));
-                rootEle.appendChild(e);
-            }
-
-            if (soundHardwareOption != null) {
-                e = dom.createElement("soundHardwareOption");
-                e.appendChild(dom.createTextNode(soundHardwareOption));
-                rootEle.appendChild(e);
-            }
-
-            if (smpCpusNumber != null) {
-                e = dom.createElement("smpCpusNumber");
-                e.appendChild(dom.createTextNode(smpCpusNumber));
-                rootEle.appendChild(e);
-            }
-
-            if (smpCoresNumber != null) {
-                e = dom.createElement("smpCoresNumber");
-                e.appendChild(dom.createTextNode(smpCoresNumber));
-                rootEle.appendChild(e);
-            }
-
-            if (smpThreadsNumber != null) {
-                e = dom.createElement("smpThreadsNumber");
-                e.appendChild(dom.createTextNode(smpThreadsNumber));
-                rootEle.appendChild(e);
-            }
-
-            if (smpSocketsNumber != null) {
-                e = dom.createElement("smpSocketsNumber");
-                e.appendChild(dom.createTextNode(smpSocketsNumber));
-                rootEle.appendChild(e);
-            }
-
-            if (smpCpusMaxNumber != null) {
-                e = dom.createElement("smpCpusMaxNumber");
-                e.appendChild(dom.createTextNode(smpCpusMaxNumber));
-                rootEle.appendChild(e);
-            }
-
-            if (firstNumaNodeMem != null) {
-                e = dom.createElement("firstNumaNodeMem");
-                e.appendChild(dom.createTextNode(firstNumaNodeMem));
-                rootEle.appendChild(e);
-            }
-
-            if (firstNumaNodeCpus != null) {
-                e = dom.createElement("firstNumaNodeCpus");
-                e.appendChild(dom.createTextNode(firstNumaNodeCpus));
-                rootEle.appendChild(e);
-            }
-
-            if (secondNumaNodeMem != null) {
-                e = dom.createElement("secondNumaNodeMem");
-                e.appendChild(dom.createTextNode(secondNumaNodeMem));
-                rootEle.appendChild(e);
-            }
-
-            if (secondNumaNodeCpus != null) {
-                e = dom.createElement("secondNumaNodeCpus");
-                e.appendChild(dom.createTextNode(secondNumaNodeCpus));
-                rootEle.appendChild(e);
-            }
-
-            if (thirdNumaNodeMem != null) {
-                e = dom.createElement("thirdNumaNodeMem");
-                e.appendChild(dom.createTextNode(thirdNumaNodeMem));
-                rootEle.appendChild(e);
-            }
-
-            if (thirdNumaNodeCpus != null) {
-                e = dom.createElement("thirdNumaNodeCpus");
-                e.appendChild(dom.createTextNode(thirdNumaNodeCpus));
-                rootEle.appendChild(e);
-            }
-
-            if (fourthNumaNodeMem != null) {
-                e = dom.createElement("fourthNumaNodeMem");
-                e.appendChild(dom.createTextNode(fourthNumaNodeMem));
-                rootEle.appendChild(e);
-            }
-
-            if (fourthNumaNodeCpus != null) {
-                e = dom.createElement("fourthNumaNodeCpus");
-                e.appendChild(dom.createTextNode(fourthNumaNodeCpus));
-                rootEle.appendChild(e);
-            }
-
-            if (fifthNumaNodeMem != null) {
-                e = dom.createElement("fifthNumaNodeMem");
-                e.appendChild(dom.createTextNode(fifthNumaNodeMem));
-                rootEle.appendChild(e);
-            }
-
-            if (fifthNumaNodeCpus != null) {
-                e = dom.createElement("fifthNumaNodeCpus");
-                e.appendChild(dom.createTextNode(fifthNumaNodeCpus));
-                rootEle.appendChild(e);
-            }
-
-            if (sixthNumaNodeMem != null) {
-                e = dom.createElement("sixthNumaNodeMem");
-                e.appendChild(dom.createTextNode(sixthNumaNodeMem));
-                rootEle.appendChild(e);
-            }
-
-            if (sixthNumaNodeCpus != null) {
-                e = dom.createElement("sixthNumaNodeCpus");
-                e.appendChild(dom.createTextNode(sixthNumaNodeCpus));
-                rootEle.appendChild(e);
-            }
-
-            if (seventhNumaNodeMem != null) {
-                e = dom.createElement("seventhNumaNodeMem");
-                e.appendChild(dom.createTextNode(seventhNumaNodeMem));
-                rootEle.appendChild(e);
-            }
-
-            if (seventhNumaNodeCpus != null) {
-                e = dom.createElement("seventhNumaNodeCpus");
-                e.appendChild(dom.createTextNode(seventhNumaNodeCpus));
-                rootEle.appendChild(e);
-            }
-
-            if (eighthNumaNodeMem != null) {
-                e = dom.createElement("eighthNumaNodeMem");
-                e.appendChild(dom.createTextNode(eighthNumaNodeMem));
-                rootEle.appendChild(e);
-            }
-
-            if (eighthNumaNodeCpus != null) {
-                e = dom.createElement("eighthNumaNodeCpus");
-                e.appendChild(dom.createTextNode(eighthNumaNodeCpus));
-                rootEle.appendChild(e);
-            }
-
-            if (ninthNumaNodeMem != null) {
-                e = dom.createElement("ninthNumaNodeMem");
-                e.appendChild(dom.createTextNode(ninthNumaNodeMem));
-                rootEle.appendChild(e);
-            }
-
-            if (ninthNumaNodeCpus != null) {
-                e = dom.createElement("ninthNumaNodeCpus");
-                e.appendChild(dom.createTextNode(ninthNumaNodeCpus));
-                rootEle.appendChild(e);
-            }
-
-            if (tenthNumaNodeMem != null) {
-                e = dom.createElement("tenthNumaNodeMem");
-                e.appendChild(dom.createTextNode(tenthNumaNodeMem));
-                rootEle.appendChild(e);
-            }
-
-            if (tenthNumaNodeCpus != null) {
-                e = dom.createElement("tenthNumaNodeCpus");
-                e.appendChild(dom.createTextNode(tenthNumaNodeCpus));
-                rootEle.appendChild(e);
-            }
-
-            if (noFrameOption != null) {
-                e = dom.createElement("noFrameOption");
-                e.appendChild(dom.createTextNode(noFrameOption));
-                rootEle.appendChild(e);
-            }
-
-            if (memPathOption != null) {
-                if (memPathOption.contains("\"")) {
-                    memPathOption = memPathOption.replaceAll("\"", "");
-                }
-                e = dom.createElement("memPathOption");
-                e.appendChild(dom.createTextNode(memPathOption));
-                rootEle.appendChild(e);
-            }
-
-            if (memPreallocOption != null) {
-                e = dom.createElement("memPreallocOption");
-                e.appendChild(dom.createTextNode(memPreallocOption));
-                rootEle.appendChild(e);
-            }
-
-            if (firstNetworkNICOption != null) {
-                e = dom.createElement("firstNetworkNICOption");
-                e.appendChild(dom.createTextNode(firstNetworkNICOption));
-                rootEle.appendChild(e);
-            }
-
-            if (firstNetworkExtraOption != null) {
-                e = dom.createElement("firstNetworkExtraOption");
-                e.appendChild(dom.createTextNode(firstNetworkExtraOption));
-                rootEle.appendChild(e);
-            }
-
-            if (firstNetworkNetdevOption != null) {
-                e = dom.createElement("firstNetworkNetdevOption");
-                e.appendChild(dom.createTextNode(firstNetworkNetdevOption));
-                rootEle.appendChild(e);
-            }
-
-            if (secondNetworkNICOption != null) {
-                e = dom.createElement("secondNetworkNICOption");
-                e.appendChild(dom.createTextNode(secondNetworkNICOption));
-                rootEle.appendChild(e);
-            }
-
-            if (secondNetworkExtraOption != null) {
-                e = dom.createElement("secondNetworkExtraOption");
-                e.appendChild(dom.createTextNode(secondNetworkExtraOption));
-                rootEle.appendChild(e);
-            }
-
-            if (secondNetworkNetdevOption != null) {
-                e = dom.createElement("secondNetworkNetdevOption");
-                e.appendChild(dom.createTextNode(secondNetworkNetdevOption));
-                rootEle.appendChild(e);
-            }
-
-            if (thirdNetworkNICOption != null) {
-                e = dom.createElement("thirdNetworkNICOption");
-                e.appendChild(dom.createTextNode(thirdNetworkNICOption));
-                rootEle.appendChild(e);
-            }
-
-            if (thirdNetworkExtraOption != null) {
-                e = dom.createElement("thirdNetworkExtraOption");
-                e.appendChild(dom.createTextNode(thirdNetworkExtraOption));
-                rootEle.appendChild(e);
-            }
-
-            if (thirdNetworkNetdevOption != null) {
-                e = dom.createElement("thirdNetworkNetdevOption");
-                e.appendChild(dom.createTextNode(thirdNetworkNetdevOption));
-                rootEle.appendChild(e);
-            }
-
-            if (fourthNetworkNICOption != null) {
-                e = dom.createElement("fourthNetworkNICOption");
-                e.appendChild(dom.createTextNode(fourthNetworkNICOption));
-                rootEle.appendChild(e);
-            }
-
-            if (fourthNetworkExtraOption != null) {
-                e = dom.createElement("fourthNetworkExtraOption");
-                e.appendChild(dom.createTextNode(fourthNetworkExtraOption));
-                rootEle.appendChild(e);
-            }
-
-            if (fourthNetworkNetdevOption != null) {
-                e = dom.createElement("fourthNetworkNetdevOption");
-                e.appendChild(dom.createTextNode(fourthNetworkNetdevOption));
-                rootEle.appendChild(e);
-            }
-
-            if (fifthNetworkNICOption != null) {
-                e = dom.createElement("fifthNetworkNICOption");
-                e.appendChild(dom.createTextNode(fifthNetworkNICOption));
-                rootEle.appendChild(e);
-            }
-
-            if (fifthNetworkExtraOption != null) {
-                e = dom.createElement("fifthNetworkExtraOption");
-                e.appendChild(dom.createTextNode(fifthNetworkExtraOption));
-                rootEle.appendChild(e);
-            }
-
-            if (fifthNetworkNetdevOption != null) {
-                e = dom.createElement("fifthNetworkNetdevOption");
-                e.appendChild(dom.createTextNode(fifthNetworkNetdevOption));
-                rootEle.appendChild(e);
-            }
-
-            if (sixthNetworkNICOption != null) {
-                e = dom.createElement("sixthNetworkNICOption");
-                e.appendChild(dom.createTextNode(sixthNetworkNICOption));
-                rootEle.appendChild(e);
-            }
-
-            if (sixthNetworkExtraOption != null) {
-                e = dom.createElement("sixthNetworkExtraOption");
-                e.appendChild(dom.createTextNode(sixthNetworkExtraOption));
-                rootEle.appendChild(e);
-            }
-
-            if (sixthNetworkNetdevOption != null) {
-                e = dom.createElement("sixthNetworkNetdevOption");
-                e.appendChild(dom.createTextNode(sixthNetworkNetdevOption));
-                rootEle.appendChild(e);
-            }
-
-            if (seventhNetworkNICOption != null) {
-                e = dom.createElement("seventhNetworkNICOption");
-                e.appendChild(dom.createTextNode(seventhNetworkNICOption));
-                rootEle.appendChild(e);
-            }
-
-            if (seventhNetworkNetdevOption != null) {
-                e = dom.createElement("seventhNetworkNetdevOption");
-                e.appendChild(dom.createTextNode(seventhNetworkNetdevOption));
-                rootEle.appendChild(e);
-            }
-
-            if (seventhNetworkExtraOption != null) {
-                e = dom.createElement("seventhNetworkExtraOption");
-                e.appendChild(dom.createTextNode(seventhNetworkExtraOption));
-                rootEle.appendChild(e);
-            }
-
-            if (eighthNetworkNICOption != null) {
-                e = dom.createElement("eighthNetworkNICOption");
-                e.appendChild(dom.createTextNode(eighthNetworkNICOption));
-                rootEle.appendChild(e);
-            }
-
-            if (eighthNetworkExtraOption != null) {
-                e = dom.createElement("eighthNetworkExtraOption");
-                e.appendChild(dom.createTextNode(eighthNetworkExtraOption));
-                rootEle.appendChild(e);
-            }
-
-            if (eighthNetworkNetdevOption != null) {
-                e = dom.createElement("eighthNetworkNetdevOption");
-                e.appendChild(dom.createTextNode(eighthNetworkNetdevOption));
-                rootEle.appendChild(e);
-            }
-
-            if (ninthNetworkNICOption != null) {
-                e = dom.createElement("ninthNetworkNICOption");
-                e.appendChild(dom.createTextNode(ninthNetworkNICOption));
-                rootEle.appendChild(e);
-            }
-
-            if (ninthNetworkExtraOption != null) {
-                e = dom.createElement("ninthNetworkExtraOption");
-                e.appendChild(dom.createTextNode(ninthNetworkExtraOption));
-                rootEle.appendChild(e);
-            }
-
-            if (ninthNetworkNetdevOption != null) {
-                e = dom.createElement("ninthNetworkNetdevOption");
-                e.appendChild(dom.createTextNode(ninthNetworkNetdevOption));
-                rootEle.appendChild(e);
-            }
-
-            if (tenthNetworkNICOption != null) {
-                e = dom.createElement("tenthNetworkNICOption");
-                e.appendChild(dom.createTextNode(tenthNetworkNICOption));
-                rootEle.appendChild(e);
-            }
-
-            if (tenthNetworkExtraOption != null) {
-                e = dom.createElement("tenthNetworkExtraOption");
-                e.appendChild(dom.createTextNode(tenthNetworkExtraOption));
-                rootEle.appendChild(e);
-            }
-
-            if (tenthNetworkNetdevOption != null) {
-                e = dom.createElement("tenthNetworkNetdevOption");
-                e.appendChild(dom.createTextNode(tenthNetworkNetdevOption));
-                rootEle.appendChild(e);
-            }
-
-            if (rtcOption != null) {
-                e = dom.createElement("rtcOption");
-                e.appendChild(dom.createTextNode(rtcOption));
-                rootEle.appendChild(e);
-            }
-
-            if (nameOption != null) {
-                e = dom.createElement("nameOption");
-                e.appendChild(dom.createTextNode(nameOption));
-                rootEle.appendChild(e);
-            }
-
-            if (snapshotOption != null) {
-                e = dom.createElement("snapshotOption");
-                e.appendChild(dom.createTextNode(snapshotOption));
-                rootEle.appendChild(e);
-            }
-
-            if (noFdBootchkOption != null) {
-                e = dom.createElement("noFdBootchkOption");
-                e.appendChild(dom.createTextNode(noFdBootchkOption));
-                rootEle.appendChild(e);
-            }
-
-            if (noHpetOption != null) {
-                e = dom.createElement("noHpetOption");
-                e.appendChild(dom.createTextNode(noHpetOption));
-                rootEle.appendChild(e);
-            }
-
-            if (mtdblockOption != null) {
-                e = dom.createElement("mtdblockOption");
-                e.appendChild(dom.createTextNode(mtdblockOption));
-                rootEle.appendChild(e);
-            }
-
-            if (sdOption != null) {
-                e = dom.createElement("sdOption");
-                e.appendChild(dom.createTextNode(sdOption));
-                rootEle.appendChild(e);
-            }
-
-            if (pflashOption != null) {
-                e = dom.createElement("pflashOption");
-                e.appendChild(dom.createTextNode(pflashOption));
-                rootEle.appendChild(e);
-            }
-
-            if (monitorOption != null) {
-                e = dom.createElement("monitorOption");
-                e.appendChild(dom.createTextNode(monitorOption));
-                rootEle.appendChild(e);
-            }
-
-            if (qmpOption != null) {
-                e = dom.createElement("qmpOption");
-                e.appendChild(dom.createTextNode(qmpOption));
-                rootEle.appendChild(e);
-            }
-
-            if (usbDriverOption != null) {
-                e = dom.createElement("usbDriverOption");
-                e.appendChild(dom.createTextNode(usbDriverOption));
-                rootEle.appendChild(e);
-            }
-
-            if (usbMouseOption != null) {
-                e = dom.createElement("usbMouseOption");
-                e.appendChild(dom.createTextNode(usbMouseOption));
-                rootEle.appendChild(e);
-            }
-
-            if (usbTabletOption != null) {
-                e = dom.createElement("usbTabletOption");
-                e.appendChild(dom.createTextNode(usbTabletOption));
-                rootEle.appendChild(e);
-            }
-
-            if (usbWacomTabletOption != null) {
-                e = dom.createElement("usbWacomTabletOption");
-                e.appendChild(dom.createTextNode(usbWacomTabletOption));
-                rootEle.appendChild(e);
-            }
-
-            if (usbKeyboardOption != null) {
-                e = dom.createElement("usbKeyboardOption");
-                e.appendChild(dom.createTextNode(usbKeyboardOption));
-                rootEle.appendChild(e);
-            }
-
-            if (usbBrailleOption != null) {
-                e = dom.createElement("usbBrailleOption");
-                e.appendChild(dom.createTextNode(usbBrailleOption));
-                rootEle.appendChild(e);
-            }
-
-            if (usbDiskOption != null) {
-                e = dom.createElement("usbDiskOption");
-                e.appendChild(dom.createTextNode(usbDiskOption));
-                rootEle.appendChild(e);
-            }
-
-            if (usbSerialOption != null) {
-                e = dom.createElement("usbSerialOption");
-                e.appendChild(dom.createTextNode(usbSerialOption));
-                rootEle.appendChild(e);
-            }
-
-            if (usbNetOption != null) {
-                e = dom.createElement("usbNetOption");
-                e.appendChild(dom.createTextNode(usbNetOption));
-                rootEle.appendChild(e);
-            }
-
-            if (kernelBootOption != null) {
-                e = dom.createElement("kernelBootOption");
-                e.appendChild(dom.createTextNode(kernelBootOption));
-                rootEle.appendChild(e);
-            }
-
-            if (customOptions != null) {
-                e = dom.createElement("customOptions");
-                e.appendChild(dom.createTextNode(customOptions));
-                rootEle.appendChild(e);
+            for (String attr : attribs) {
+            	String value = this.getField(attr);
+            	
+            	if (value != null) {
+            		e = dom.createElement(attr);
+            		e.appendChild(dom.createTextNode(value));
+            		rootEle.appendChild(e);
+            	}
             }
 
             dom.appendChild(rootEle);
