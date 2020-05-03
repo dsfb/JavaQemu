@@ -13,4 +13,6 @@ JavaQemu works with JRE 1.7/1.8 and MS Windows OS.
 Since version 0.0.4a15, JavaQemu works with JRE 1.6 or Linux OS/Mac OS, too.
 Since version 0.2.0a10, JavaQemu works only with JRE 1.7+.
 
-This project is inactive and abandoned!
+This project is active again!
+
+I will make only minor bugfixes for the JavaQemu software, because I am not focusing primarily on Java.
