@@ -1,14 +1,25 @@
-package net.sf.test.javaqemu;
+package net.sourceforge.javaqemu.test;
 
 import static org.junit.Assert.*;
 
 import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
+import org.junit.Rule;
 import org.junit.Test;
 
 public class FileModelTest {
 
+	@Rule
+    public ResourceFile res = new ResourceFile("/echo.txt");
+	
+	@Test
+    public void testTextFileExistence() throws Exception
+    {
+        assertTrue(res.getContent().length() > 0);
+        assertTrue(res.getFile().exists());
+    }
+	
 	@BeforeClass
 	public static void setUpBeforeClass() throws Exception {
 	}
