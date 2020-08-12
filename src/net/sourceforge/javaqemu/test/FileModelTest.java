@@ -2,16 +2,25 @@ package net.sourceforge.javaqemu.test;
 
 import static org.junit.Assert.*;
 
+import java.io.IOException;
+
 import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Rule;
 import org.junit.Test;
 
+import net.sourceforge.javaqemu.model.FileModel;
+
 public class FileModelTest {
 
 	@Rule
     public ResourceFile res = new ResourceFile("/echo.txt");
+	
+	@Rule
+    public ResourceFile resTestVM = new ResourceFile("/TestVM.xml");
+	
+	private FileModel fileModel = new FileModel();
 	
 	@Test
     public void testTextFileExistence() throws Exception
@@ -30,6 +39,7 @@ public class FileModelTest {
 
 	@Before
 	public void setUp() throws Exception {
+		fileModel = new FileModel();
 	}
 
 	@Test
@@ -79,7 +89,13 @@ public class FileModelTest {
 
 	@Test
 	public void testGetMachineName() {
-		fail("Not yet implemented");
+		try {
+			fileModel.readXML(resTestVM.getFile().getAbsolutePath());
+		} catch(IOException e) {
+			fail("IOException!");
+		}
+		
+		assertEquals(fileModel.getMachineName(), "TestVM");
 	}
 
 	@Test
