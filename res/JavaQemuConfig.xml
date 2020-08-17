@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<JavaQemuConfiguration>
+    <defaultVMPath>/home/daniel/Documentos/Qemu VMs</defaultVMPath>
+    <execute_before_start_qemu/>
+    <qemu_executable_path>/usr/bin/qemu-system-x86_64</qemu_executable_path>
+    <execute_after_stop_qemu/>
+    <qemu_img_executable_path>/usr/bin/qemu-img</qemu_img_executable_path>
+    <bios_vga_bios_keymaps_path>/usr/share/qemu</bios_vga_bios_keymaps_path>
+</JavaQemuConfiguration>

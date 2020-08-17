@@ -15,20 +15,33 @@ import net.sourceforge.javaqemu.model.FileModel;
 public class FileModelTest {
 
 	@Rule
-    public ResourceFile res = new ResourceFile("/echo.txt");
-	
-	@Rule
     public ResourceFile resTestVM = new ResourceFile("/TestVM.xml");
-	
+
+	@Rule
+	public ResourceFile successTestVM = new ResourceFile("/testSuccess.xml");
+
+	@Rule
+	public ResourceFile resConfSW = new ResourceFile("/JavaQemuConfig.xml");
+
+	@Rule
+	public ResourceFile successConfSW = new ResourceFile("/confSuccess.xml");
+
 	private FileModel fileModel = new FileModel();
-	
+
 	@Test
-    public void testTextFileExistence() throws Exception
+    public void testTestVmFileExistence() throws Exception
     {
-        assertTrue(res.getContent().length() > 0);
-        assertTrue(res.getFile().exists());
+        assertTrue(resTestVM.getContent().length() > 0);
+        assertTrue(resTestVM.getFile().exists());
     }
-	
+
+	@Test
+    public void testTestConfigFileExistence() throws Exception
+    {
+        assertTrue(resConfSW.getContent().length() > 0);
+        assertTrue(resConfSW.getFile().exists());
+    }
+
 	@BeforeClass
 	public static void setUpBeforeClass() throws Exception {
 	}
@@ -42,90 +55,71 @@ public class FileModelTest {
 		fileModel = new FileModel();
 	}
 
-	@Test
-	public void testReadXML() {
-		fail("Not yet implemented");
-	}
+	public void useSuccessTestFile() throws IOException {
+		fileModel.saveToXML(successTestVM.getFile().getAbsolutePath());
 
-	@Test
-	public void testReadConfigurationFromXML() {
-		fail("Not yet implemented");
+		fileModel.readXML(successTestVM.getFile().getAbsolutePath());
 	}
-
-	@Test
-	public void testSaveToXML() {
-		fail("Not yet implemented");
+	
+	public void readTestVM() throws IOException {
+		fileModel.readXML(resTestVM.getFile().getAbsolutePath());
 	}
-
-	@Test
-	public void testSaveConfigurationToXML() {
-		fail("Not yet implemented");
+	
+	public void readConfig() throws IOException {
+		fileModel.readConfigurationFromXML(resConfSW.getFile().getAbsolutePath());
 	}
-
+	
 	@Test
 	public void testSetMachineName() {
-		fail("Not yet implemented");
+		try {
+			readTestVM();
+
+			assertEquals(fileModel.getMachineName(), "TestVM");
+
+			fileModel.setMachineName("NewVM");
+
+			useSuccessTestFile();
+
+			assertEquals(fileModel.getMachineName(), "NewVM");
+		} catch(IOException e) {
+			fail("IOException at this single testCase!");
+		}
 	}
 
 	@Test
 	public void testSetFirstHardDiskOption() {
-		fail("Not yet implemented");
-	}
+		try {
+			readTestVM();
 
-	@Test
-	public void testSetSecondHardDiskOption() {
-		fail("Not yet implemented");
-	}
+			assertEquals(fileModel.getFirstHardDiskOption(), 
+					"/home/daniel/Documentos/Qemu VMs/TestVM/TestVM.vdi");
 
-	@Test
-	public void testGetMachineType() {
-		fail("Not yet implemented");
+			fileModel.setFirstHardDiskOption("/home/daniel/Documentos/Qemu VMs/TestVM/NewVM.vdi");
+
+			useSuccessTestFile();
+
+			assertEquals(fileModel.getFirstHardDiskOption(),
+					"/home/daniel/Documentos/Qemu VMs/TestVM/NewVM.vdi");
+		} catch(IOException e) {
+			fail("IOException at this single testCase!");
+		}
 	}
 
 	@Test
 	public void testSetMachineType() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	public void testGetMachineName() {
 		try {
-			fileModel.readXML(resTestVM.getFile().getAbsolutePath());
+			readTestVM();
+
+			assertEquals(fileModel.getMachineType(), "pc");
+
+			fileModel.setMachineType("q35");
+
+			useSuccessTestFile();
+
+			assertEquals(fileModel.getMachineType(), "q35");
 		} catch(IOException e) {
-			fail("IOException!");
+			fail("IOException at this single testCase!");
 		}
-		
-		assertEquals(fileModel.getMachineName(), "TestVM");
-	}
-
-	@Test
-	public void testGetFirstHardDiskOption() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	public void testGetSecondHardDiskOption() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	public void testGetThirdHardDiskOption() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	public void testSetThirdHardDiskOption() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	public void testGetFourthHardDiskOption() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	public void testSetFourthHardDiskOption() {
-		fail("Not yet implemented");
 	}
 
 	@Test
@@ -134,243 +128,249 @@ public class FileModelTest {
 	}
 
 	@Test
-	public void testGetRamSize() {
-		fail("Not yet implemented");
-	}
-
-	@Test
 	public void testSetRamSize() {
-		fail("Not yet implemented");
-	}
+		try {
+			readTestVM();
 
-	@Test
-	public void testSetConfiguration() {
-		fail("Not yet implemented");
-	}
+			assertEquals(fileModel.getRamSize(),
+					"128.000");
 
-	@Test
-	public void testGetConfiguration() {
-		fail("Not yet implemented");
-	}
+			fileModel.setRamSize("196");
 
-	@Test
-	public void testGetDefaultVMPath() {
-		fail("Not yet implemented");
+			useSuccessTestFile();
+
+			assertEquals(fileModel.getRamSize(), "196");
+		} catch(IOException e) {
+			fail("IOException at this single testCase!");
+		}
 	}
 
 	@Test
 	public void testSetDefaultVMPath() {
-		fail("Not yet implemented");
-	}
+		try {
+			readConfig();
 
-	@Test
-	public void testGetExecute_before_start_qemu() {
-		fail("Not yet implemented");
-	}
+			assertEquals(fileModel.getDefaultVMPath(),
+					"/home/daniel/Documentos/Qemu VMs");
 
-	@Test
-	public void testSetExecute_before_start_qemu() {
-		fail("Not yet implemented");
-	}
+			fileModel.setDefaultVMPath("/home/daniel/Documentos/New Qemu VMs");
 
-	@Test
-	public void testGetQemu_executable_path() {
-		fail("Not yet implemented");
+			useSuccessTestFile();
+
+			assertEquals(fileModel.getDefaultVMPath(), 
+					"/home/daniel/Documentos/New Qemu VMs");
+		} catch(IOException e) {
+			fail("IOException at this single testCase!");
+		}
 	}
 
 	@Test
 	public void testSetQemu_executable_path() {
-		fail("Not yet implemented");
-	}
+		try {
+			fileModel.readXML(resConfSW.getFile().getAbsolutePath());
 
-	@Test
-	public void testGetExecute_after_stop_qemu() {
-		fail("Not yet implemented");
-	}
+			assertEquals(fileModel.getQemu_executable_path(),
+					"/usr/bin/qemu-system-x86_64");
 
-	@Test
-	public void testSetExecute_after_stop_qemu() {
-		fail("Not yet implemented");
+			fileModel.setQemu_executable_path("/usr/bin/qemu-system-i386");
+
+			useSuccessTestFile();
+
+			assertEquals(fileModel.getQemu_executable_path(), 
+					"/usr/bin/qemu-system-i386");
+		} catch(IOException e) {
+			fail("IOException at this single testCase!");
+		}
 	}
 
 	@Test
 	public void testGetQemu_img_executable_path() {
-		fail("Not yet implemented");
-	}
+		try {
+			fileModel.readXML(resConfSW.getFile().getAbsolutePath());
 
-	@Test
-	public void testSetQemu_img_executable_path() {
-		fail("Not yet implemented");
+			assertEquals(fileModel.getQemu_img_executable_path(),
+					"/usr/bin/qemu-img");
+		} catch(IOException e) {
+			fail("IOException at this single testCase!");
+		}
 	}
 
 	@Test
 	public void testGetBios_vga_bios_keymaps_path() {
-		fail("Not yet implemented");
-	}
+		try {
+			fileModel.readXML(resConfSW.getFile().getAbsolutePath());
 
-	@Test
-	public void testSetBios_vga_bios_keymaps_path() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	public void testGetDisplayType() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	public void testSetDisplayType() {
-		fail("Not yet implemented");
+			assertEquals(fileModel.getBios_vga_bios_keymaps_path(),
+					"/usr/share/qemu");
+		} catch(IOException e) {
+			fail("IOException at this single testCase!");
+		}
 	}
 
 	@Test
 	public void testGetNographicOption() {
-		fail("Not yet implemented");
-	}
+		try {
+			readTestVM();
 
-	@Test
-	public void testSetNographicOption() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	public void testGetVgaType() {
-		fail("Not yet implemented");
+			assertEquals(fileModel.getNographicOption(),
+					"false");
+		} catch(IOException e) {
+			fail("IOException at this single testCase!");
+		}
 	}
 
 	@Test
 	public void testSetVgaType() {
-		fail("Not yet implemented");
+		try {
+			readTestVM();
+
+			assertEquals(fileModel.getVgaType(), "cirrus");
+
+			fileModel.setVgaType("qxl");
+
+			useSuccessTestFile();
+
+			assertEquals(fileModel.getVgaType(), "qxl");
+		} catch(IOException e) {
+			fail("IOException at this single testCase!");
+		}
 	}
 
 	@Test
 	public void testGetFullscreenOption() {
-		fail("Not yet implemented");
-	}
+		try {
+			readTestVM();
 
-	@Test
-	public void testSetFullscreenOption() {
-		fail("Not yet implemented");
+			assertEquals(fileModel.getFullscreenOption(),
+					"false");
+		} catch(IOException e) {
+			fail("IOException at this single testCase!");
+		}
 	}
 
 	@Test
 	public void testGetWin2khackOption() {
-		fail("Not yet implemented");
-	}
+		try {
+			readTestVM();
 
-	@Test
-	public void testSetWin2khackOption() {
-		fail("Not yet implemented");
+			assertEquals(fileModel.getWin2khackOption(),
+					"true");
+		} catch(IOException e) {
+			fail("IOException at this single testCase!");
+		}
 	}
 
 	@Test
 	public void testGetNoacpiOption() {
-		fail("Not yet implemented");
-	}
+		try {
+			readTestVM();
 
-	@Test
-	public void testSetNoacpiOption() {
-		fail("Not yet implemented");
+			assertEquals(fileModel.getNoacpiOption(),
+					"true");
+		} catch(IOException e) {
+			fail("IOException at this single testCase!");
+		}
 	}
 
 	@Test
 	public void testGetMachineAccel1() {
-		fail("Not yet implemented");
-	}
+		try {
+			readTestVM();
 
-	@Test
-	public void testSetMachineAccel1() {
-		fail("Not yet implemented");
+			assertEquals(fileModel.getMachineAccel1(),
+					"kvm");
+		} catch(IOException e) {
+			fail("IOException at this single testCase!");
+		}
 	}
 
 	@Test
 	public void testGetMachineAccel2() {
-		fail("Not yet implemented");
-	}
+		try {
+			readTestVM();
 
-	@Test
-	public void testSetMachineAccel2() {
-		fail("Not yet implemented");
+			assertEquals(fileModel.getMachineAccel2(),
+					"tcg");
+		} catch(IOException e) {
+			fail("IOException at this single testCase!");
+		}
 	}
 
 	@Test
 	public void testGetMachineAccel3() {
-		fail("Not yet implemented");
-	}
+		try {
+			readTestVM();
 
-	@Test
-	public void testSetMachineAccel3() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	public void testGetMachineKernel_irpchip() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	public void testSetMachineKernel_irpchip() {
-		fail("Not yet implemented");
+			assertEquals(fileModel.getMachineAccel3(),
+					"xen");
+		} catch(IOException e) {
+			fail("IOException at this single testCase!");
+		}
 	}
 
 	@Test
 	public void testGetMachineKvm_shadow_mem() {
-		fail("Not yet implemented");
-	}
+		try {
+			readTestVM();
 
-	@Test
-	public void testSetMachineKvm_shadow_mem() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	public void testGetMachineDump_guest_core() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	public void testSetMachineDump_guest_core() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	public void testGetMachineMem_merge() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	public void testSetMachineMem_merge() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	public void testGetCpuModel() {
-		fail("Not yet implemented");
+			assertEquals(fileModel.getMachineKvm_shadow_mem(),
+					"0");
+		} catch(IOException e) {
+			fail("IOException at this single testCase!");
+		}
 	}
 
 	@Test
 	public void testSetCpuModel() {
-		fail("Not yet implemented");
-	}
+		try {
+			readTestVM();
 
-	@Test
-	public void testGetCpuidFlags() {
-		fail("Not yet implemented");
+			assertEquals(fileModel.getCpuModel(), "core2duo");
+
+			fileModel.setCpuModel("qemu64");
+
+			useSuccessTestFile();
+
+			assertEquals(fileModel.getCpuModel(), "qemu64");
+		} catch(IOException e) {
+			fail("IOException at this single testCase!");
+		}
 	}
 
 	@Test
 	public void testSetCpuidFlags() {
-		fail("Not yet implemented");
-	}
+		try {
+			readTestVM();
 
-	@Test
-	public void testGetCdrom() {
-		fail("Not yet implemented");
+			assertEquals(fileModel.getCpuidFlags(),
+					",+sse2,+sse,+acpi,+fpu,+sse4_1,+sse4.1,+sse4_2,+sse4.2,+ssse3,+sse3,+avx2,+3dnow,+3dnowext,+i64");
+
+			fileModel.setCpuidFlags(",+sse2,+sse,+acpi,+fpu,+sse4_1");
+
+			useSuccessTestFile();
+
+			assertEquals(fileModel.getCpuidFlags(), ",+sse2,+sse,+acpi,+fpu,+sse4_1");
+		} catch(IOException e) {
+			fail("IOException at this single testCase!");
+		}
 	}
 
 	@Test
 	public void testSetCdrom() {
-		fail("Not yet implemented");
+		try {
+			readTestVM();
+
+			assertEquals(fileModel.getCdrom(),
+					"/home/daniel/Downloads/isos/Core-11.1.iso");
+
+			fileModel.setCdrom("/home/daniel/Downloads/isos/Core-11.0.iso");
+
+			useSuccessTestFile();
+
+			assertEquals(fileModel.getCdrom(), "/home/daniel/Downloads/isos/Core-11.0.iso");
+		} catch(IOException e) {
+			fail("IOException at this single testCase!");
+		}
 	}
 
 	@Test
@@ -524,266 +524,6 @@ public class FileModelTest {
 	}
 
 	@Test
-	public void testGetSmpCpusNumber() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	public void testSetSmpCpusNumber() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	public void testGetSmpCoresNumber() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	public void testSetSmpCoresNumber() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	public void testGetSmpThreadsNumber() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	public void testSetSmpThreadsNumber() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	public void testGetSmpSocketsNumber() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	public void testSetSmpSocketsNumber() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	public void testGetSmpCpusMaxNumber() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	public void testSetSmpCpusMaxNumber() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	public void testGetFirstNumaNodeMem() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	public void testSetFirstNumaNodeMem() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	public void testGetFirstNumaNodeCpus() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	public void testSetFirstNumaNodeCpus() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	public void testGetSecondNumaNodeMem() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	public void testSetSecondNumaNodeMem() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	public void testGetSecondNumaNodeCpus() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	public void testSetSecondNumaNodeCpus() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	public void testGetThirdNumaNodeMem() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	public void testSetThirdNumaNodeMem() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	public void testGetThirdNumaNodeCpus() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	public void testSetThirdNumaNodeCpus() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	public void testGetFourthNumaNodeMem() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	public void testSetFourthNumaNodeMem() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	public void testGetFourthNumaNodeCpus() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	public void testSetFourthNumaNodeCpus() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	public void testGetFifthNumaNodeMem() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	public void testSetFifthNumaNodeMem() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	public void testGetFifthNumaNodeCpus() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	public void testSetFifthNumaNodeCpus() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	public void testGetSixthNumaNodeMem() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	public void testSetSixthNumaNodeMem() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	public void testGetSixthNumaNodeCpus() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	public void testSetSixthNumaNodeCpus() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	public void testGetSeventhNumaNodeMem() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	public void testSetSeventhNumaNodeMem() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	public void testGetSeventhNumaNodeCpus() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	public void testSetSeventhNumaNodeCpus() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	public void testGetEighthNumaNodeMem() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	public void testSetEighthNumaNodeMem() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	public void testGetEighthNumaNodeCpus() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	public void testSetEighthNumaNodeCpus() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	public void testGetNinthNumaNodeMem() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	public void testSetNinthNumaNodeMem() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	public void testGetNinthNumaNodeCpus() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	public void testSetNinthNumaNodeCpus() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	public void testGetTenthNumaNodeMem() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	public void testSetTenthNumaNodeMem() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	public void testGetTenthNumaNodeCpus() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	public void testSetTenthNumaNodeCpus() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	public void testGetNoFrameOption() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	public void testSetNoFrameOption() {
-		fail("Not yet implemented");
-	}
-
-	@Test
 	public void testGetMemPathOption() {
 		fail("Not yet implemented");
 	}
@@ -800,306 +540,6 @@ public class FileModelTest {
 
 	@Test
 	public void testSetMemPreallocOption() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	public void testGetFirstNetworkNICOption() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	public void testSetFirstNetworkNICOption() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	public void testGetFirstNetworkExtraOption() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	public void testSetFirstNetworkExtraOption() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	public void testGetFirstNetworkNetdevOption() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	public void testSetFirstNetworkNetdevOption() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	public void testGetSecondNetworkNICOption() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	public void testSetSecondNetworkNICOption() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	public void testGetSecondNetworkExtraOption() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	public void testSetSecondNetworkExtraOption() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	public void testGetSecondNetworkNetdevOption() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	public void testSetSecondNetworkNetdevOption() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	public void testGetThirdNetworkNICOption() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	public void testSetThirdNetworkNICOption() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	public void testGetThirdNetworkExtraOption() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	public void testSetThirdNetworkExtraOption() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	public void testGetThirdNetworkNetdevOption() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	public void testSetThirdNetworkNetdevOption() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	public void testGetFourthNetworkNICOption() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	public void testSetFourthNetworkNICOption() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	public void testGetFourthNetworkExtraOption() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	public void testSetFourthNetworkExtraOption() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	public void testGetFourthNetworkNetdevOption() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	public void testSetFourthNetworkNetdevOption() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	public void testGetFifthNetworkNICOption() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	public void testSetFifthNetworkNICOption() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	public void testGetFifthNetworkExtraOption() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	public void testSetFifthNetworkExtraOption() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	public void testGetFifthNetworkNetdevOption() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	public void testSetFifthNetworkNetdevOption() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	public void testGetSixthNetworkNICOption() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	public void testSetSixthNetworkNICOption() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	public void testGetSixthNetworkExtraOption() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	public void testSetSixthNetworkExtraOption() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	public void testGetSixthNetworkNetdevOption() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	public void testSetSixthNetworkNetdevOption() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	public void testGetSeventhNetworkNICOption() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	public void testSetSeventhNetworkNICOption() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	public void testGetSeventhNetworkExtraOption() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	public void testSetSeventhNetworkExtraOption() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	public void testGetSeventhNetworkNetdevOption() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	public void testSetSeventhNetworkNetdevOption() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	public void testGetEighthNetworkNICOption() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	public void testSetEighthNetworkNICOption() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	public void testGetEighthNetworkExtraOption() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	public void testSetEighthNetworkExtraOption() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	public void testGetEighthNetworkNetdevOption() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	public void testSetEighthNetworkNetdevOption() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	public void testGetNinthNetworkNICOption() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	public void testSetNinthNetworkNICOption() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	public void testGetNinthNetworkExtraOption() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	public void testSetNinthNetworkExtraOption() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	public void testGetNinthNetworkNetdevOption() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	public void testSetNinthNetworkNetdevOption() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	public void testGetTenthNetworkNICOption() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	public void testSetTenthNetworkNICOption() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	public void testGetTenthNetworkExtraOption() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	public void testSetTenthNetworkExtraOption() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	public void testGetTenthNetworkNetdevOption() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	public void testSetTenthNetworkNetdevOption() {
 		fail("Not yet implemented");
 	}
 
@@ -1255,42 +695,7 @@ public class FileModelTest {
 
 	@Test
 	public void testGetUsbBrailleOption() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	public void testSetUsbBrailleOption() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	public void testGetUsbDiskOption() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	public void testSetUsbDiskOption() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	public void testGetUsbSerialOption() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	public void testSetUsbSerialOption() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	public void testGetUsbNetOption() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	public void testSetUsbNetOption() {
-		fail("Not yet implemented");
+		
 	}
 
 	@Test
@@ -1312,65 +717,4 @@ public class FileModelTest {
 	public void testSetCustomOptions() {
 		fail("Not yet implemented");
 	}
-
-	@Test
-	public void testObject() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	public void testGetClass() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	public void testHashCode() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	public void testEquals() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	public void testClone() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	public void testToString() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	public void testNotify() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	public void testNotifyAll() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	public void testWait() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	public void testWaitLong() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	public void testWaitLongInt() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	public void testFinalize() {
-		fail("Not yet implemented");
-	}
-
 }
