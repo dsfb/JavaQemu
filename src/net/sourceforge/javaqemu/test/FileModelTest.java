@@ -124,7 +124,11 @@ public class FileModelTest {
 
 	@Test
 	public void testChecks_extension() {
-		fail("Not yet implemented");
+		String pathLinux = "/home/javaqemu/Documents/MyVM.xml";
+		assertEquals(fileModel.checks_extension(pathLinux), "/");
+		
+		String pathWindows = "C:\\windows";
+		assertEquals(fileModel.checks_extension(pathWindows), "\\");
 	}
 
 	@Test
@@ -167,7 +171,7 @@ public class FileModelTest {
 	@Test
 	public void testSetQemu_executable_path() {
 		try {
-			fileModel.readXML(resConfSW.getFile().getAbsolutePath());
+			readConfig();
 
 			assertEquals(fileModel.getQemu_executable_path(),
 					"/usr/bin/qemu-system-x86_64");
@@ -186,7 +190,7 @@ public class FileModelTest {
 	@Test
 	public void testGetQemu_img_executable_path() {
 		try {
-			fileModel.readXML(resConfSW.getFile().getAbsolutePath());
+			readConfig();
 
 			assertEquals(fileModel.getQemu_img_executable_path(),
 					"/usr/bin/qemu-img");
@@ -198,7 +202,7 @@ public class FileModelTest {
 	@Test
 	public void testGetBios_vga_bios_keymaps_path() {
 		try {
-			fileModel.readXML(resConfSW.getFile().getAbsolutePath());
+			readConfig();
 
 			assertEquals(fileModel.getBios_vga_bios_keymaps_path(),
 					"/usr/share/qemu");
@@ -374,347 +378,461 @@ public class FileModelTest {
 	}
 
 	@Test
-	public void testGetFloppyDiskA() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	public void testSetFloppyDiskA() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	public void testGetFloppyDiskB() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	public void testSetFloppyDiskB() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	public void testGetBootOrder1() {
-		fail("Not yet implemented");
-	}
-
-	@Test
 	public void testSetBootOrder1() {
-		fail("Not yet implemented");
-	}
+		try {
+			readTestVM();
 
-	@Test
-	public void testGetBootOrder2() {
-		fail("Not yet implemented");
+			assertEquals(fileModel.getBootOrder1(),
+					"d");
+
+			fileModel.setBootOrder1("c");
+
+			useSuccessTestFile();
+
+			assertEquals(fileModel.getBootOrder1(), "c");
+		} catch(IOException e) {
+			fail("IOException at this single testCase!");
+		}
 	}
 
 	@Test
 	public void testSetBootOrder2() {
-		fail("Not yet implemented");
-	}
+		try {
+			readTestVM();
 
-	@Test
-	public void testGetBootOrder3() {
-		fail("Not yet implemented");
+			assertEquals(fileModel.getBootOrder2(),
+					"c");
+
+			fileModel.setBootOrder2("d");
+
+			useSuccessTestFile();
+
+			assertEquals(fileModel.getBootOrder2(), "d");
+		} catch(IOException e) {
+			fail("IOException at this single testCase!");
+		}
 	}
 
 	@Test
 	public void testSetBootOrder3() {
-		fail("Not yet implemented");
-	}
+		try {
+			readTestVM();
 
-	@Test
-	public void testGetBootOnce1() {
-		fail("Not yet implemented");
+			assertNull(fileModel.getBootOrder3());
+
+			fileModel.setBootOrder3("b");
+
+			useSuccessTestFile();
+
+			assertEquals(fileModel.getBootOrder3(), "b");
+		} catch(IOException e) {
+			fail("IOException at this single testCase!");
+		}
 	}
 
 	@Test
 	public void testSetBootOnce1() {
-		fail("Not yet implemented");
-	}
+		try {
+			readTestVM();
 
-	@Test
-	public void testGetBootOnce2() {
-		fail("Not yet implemented");
+			assertEquals(fileModel.getBootOnce1(),
+					"c");
+
+			fileModel.setBootOnce1("b");
+
+			useSuccessTestFile();
+
+			assertEquals(fileModel.getBootOnce1(), "b");
+		} catch(IOException e) {
+			fail("IOException at this single testCase!");
+		}
 	}
 
 	@Test
 	public void testSetBootOnce2() {
-		fail("Not yet implemented");
-	}
+		try {
+			readTestVM();
 
-	@Test
-	public void testGetBootOnce3() {
-		fail("Not yet implemented");
+			assertEquals(fileModel.getBootOnce2(),
+					"d");
+
+			fileModel.setBootOnce2("a");
+
+			useSuccessTestFile();
+
+			assertEquals(fileModel.getBootOnce2(), "a");
+		} catch(IOException e) {
+			fail("IOException at this single testCase!");
+		}
 	}
 
 	@Test
 	public void testSetBootOnce3() {
-		fail("Not yet implemented");
+		try {
+			readTestVM();
+
+			assertNull(fileModel.getBootOnce3());
+
+			fileModel.setBootOnce3("a");
+
+			useSuccessTestFile();
+
+			assertEquals(fileModel.getBootOnce3(), "a");
+		} catch(IOException e) {
+			fail("IOException at this single testCase!");
+		}
 	}
 
 	@Test
 	public void testGetBootMenu() {
-		fail("Not yet implemented");
-	}
+		try {
+			readTestVM();
 
-	@Test
-	public void testSetBootMenu() {
-		fail("Not yet implemented");
+			assertNull(fileModel.getBootMenu());
+		} catch(IOException e) {
+			fail("IOException at this single testCase!");
+		}
 	}
 
 	@Test
 	public void testGetBootSplash() {
-		fail("Not yet implemented");
-	}
+		try {
+			readTestVM();
 
-	@Test
-	public void testSetBootSplash() {
-		fail("Not yet implemented");
+			assertNull(fileModel.getBootSplash());
+		} catch(IOException e) {
+			fail("IOException at this single testCase!");
+		}
 	}
 
 	@Test
 	public void testGetBootSplashTime() {
-		fail("Not yet implemented");
-	}
+		try {
+			readTestVM();
 
-	@Test
-	public void testSetBootSplashTime() {
-		fail("Not yet implemented");
+			assertNull(fileModel.getBootSplashTime());
+		} catch(IOException e) {
+			fail("IOException at this single testCase!");
+		}
 	}
 
 	@Test
 	public void testGetBootRebootTimeout() {
-		fail("Not yet implemented");
-	}
+		try {
+			readTestVM();
 
-	@Test
-	public void testSetBootRebootTimeout() {
-		fail("Not yet implemented");
+			assertNull(fileModel.getBootRebootTimeout());
+		} catch(IOException e) {
+			fail("IOException at this single testCase!");
+		}
 	}
 
 	@Test
 	public void testGetBootStrict() {
-		fail("Not yet implemented");
-	}
+		try {
+			readTestVM();
 
-	@Test
-	public void testSetBootStrict() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	public void testGetKeyboardLayoutLanguage() {
-		fail("Not yet implemented");
+			assertNull(fileModel.getBootStrict());
+		} catch(IOException e) {
+			fail("IOException at this single testCase!");
+		}
 	}
 
 	@Test
 	public void testSetKeyboardLayoutLanguage() {
-		fail("Not yet implemented");
-	}
+		try {
+			readTestVM();
 
-	@Test
-	public void testGetSoundHardwareOption() {
-		fail("Not yet implemented");
+			assertEquals(fileModel.getKeyboardLayoutLanguage(),
+					"pt-br");
+
+			fileModel.setKeyboardLayoutLanguage("en-us");
+
+			useSuccessTestFile();
+
+			assertEquals(fileModel.getKeyboardLayoutLanguage(), "en-us");
+		} catch(IOException e) {
+			fail("IOException at this single testCase!");
+		}
 	}
 
 	@Test
 	public void testSetSoundHardwareOption() {
-		fail("Not yet implemented");
-	}
+		try {
+			readTestVM();
 
-	@Test
-	public void testGetMemPathOption() {
-		fail("Not yet implemented");
-	}
+			assertEquals(fileModel.getSoundHardwareOption(),
+					"sb16");
 
-	@Test
-	public void testSetMemPathOption() {
-		fail("Not yet implemented");
-	}
+			fileModel.setSoundHardwareOption("ac97");
 
-	@Test
-	public void testGetMemPreallocOption() {
-		fail("Not yet implemented");
-	}
+			useSuccessTestFile();
 
-	@Test
-	public void testSetMemPreallocOption() {
-		fail("Not yet implemented");
+			assertEquals(fileModel.getSoundHardwareOption(), "ac97");
+		} catch(IOException e) {
+			fail("IOException at this single testCase!");
+		}
 	}
 
 	@Test
 	public void testGetRtcOption() {
-		fail("Not yet implemented");
-	}
+		try {
+			readTestVM();
 
-	@Test
-	public void testSetRtcOption() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	public void testGetNameOption() {
-		fail("Not yet implemented");
+			assertEquals(fileModel.getRtcOption(),
+					"base=utc");
+		} catch(IOException e) {
+			fail("IOException at this single testCase!");
+		}
 	}
 
 	@Test
 	public void testSetNameOption() {
-		fail("Not yet implemented");
-	}
+		try {
+			readTestVM();
 
-	@Test
-	public void testGetSnapshotOption() {
-		fail("Not yet implemented");
+			assertEquals(fileModel.getNameOption(),
+					"TestVM");
+
+			fileModel.setNameOption("MyVM");
+
+			useSuccessTestFile();
+
+			assertEquals(fileModel.getNameOption(), "MyVM");
+		} catch(IOException e) {
+			fail("IOException at this single testCase!");
+		}
 	}
 
 	@Test
 	public void testSetSnapshotOption() {
-		fail("Not yet implemented");
-	}
+		try {
+			readTestVM();
 
-	@Test
-	public void testGetNoFdBootchkOption() {
-		fail("Not yet implemented");
+			assertEquals(fileModel.getSnapshotOption(),
+					"false");
+
+			fileModel.setSnapshotOption("true");
+
+			useSuccessTestFile();
+
+			assertEquals(fileModel.getSnapshotOption(), "true");
+		} catch(IOException e) {
+			fail("IOException at this single testCase!");
+		}
 	}
 
 	@Test
 	public void testSetNoFdBootchkOption() {
-		fail("Not yet implemented");
-	}
+		try {
+			readTestVM();
 
-	@Test
-	public void testGetNoHpetOption() {
-		fail("Not yet implemented");
+			assertEquals(fileModel.getNoFdBootchkOption(),
+					"true");
+
+			fileModel.setNoFdBootchkOption("false");
+
+			useSuccessTestFile();
+
+			assertEquals(fileModel.getNoFdBootchkOption(), "false");
+		} catch(IOException e) {
+			fail("IOException at this single testCase!");
+		}
 	}
 
 	@Test
 	public void testSetNoHpetOption() {
-		fail("Not yet implemented");
+		try {
+			readTestVM();
+
+			assertEquals(fileModel.getNoHpetOption(),
+					"true");
+
+			fileModel.setNoHpetOption("false");
+
+			useSuccessTestFile();
+
+			assertEquals(fileModel.getNoHpetOption(), "false");
+		} catch(IOException e) {
+			fail("IOException at this single testCase!");
+		}
 	}
 
 	@Test
 	public void testGetMtdblockOption() {
-		fail("Not yet implemented");
-	}
+		try {
+			readTestVM();
 
-	@Test
-	public void testSetMtdblockOption() {
-		fail("Not yet implemented");
+			assertNull(fileModel.getMtdblockOption());
+		} catch(IOException e) {
+			fail("IOException at this single testCase!");
+		}
 	}
 
 	@Test
 	public void testGetSdOption() {
-		fail("Not yet implemented");
-	}
+		try {
+			readTestVM();
 
-	@Test
-	public void testSetSdOption() {
-		fail("Not yet implemented");
+			assertNull(fileModel.getSdOption());
+		} catch(IOException e) {
+			fail("IOException at this single testCase!");
+		}
 	}
 
 	@Test
 	public void testGetPflashOption() {
-		fail("Not yet implemented");
-	}
+		try {
+			readTestVM();
 
-	@Test
-	public void testSetPflashOption() {
-		fail("Not yet implemented");
+			assertNull(fileModel.getPflashOption());
+		} catch(IOException e) {
+			fail("IOException at this single testCase!");
+		}
 	}
 
 	@Test
 	public void testGetMonitorOption() {
-		fail("Not yet implemented");
-	}
+		try {
+			readTestVM();
 
-	@Test
-	public void testSetMonitorOption() {
-		fail("Not yet implemented");
+			assertNull(fileModel.getMonitorOption());
+		} catch(IOException e) {
+			fail("IOException at this single testCase!");
+		}
 	}
 
 	@Test
 	public void testGetQmpOption() {
-		fail("Not yet implemented");
-	}
+		try {
+			readTestVM();
 
-	@Test
-	public void testSetQmpOption() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	public void testGetUsbDriverOption() {
-		fail("Not yet implemented");
+			assertNull(fileModel.getQmpOption());
+		} catch(IOException e) {
+			fail("IOException at this single testCase!");
+		}
 	}
 
 	@Test
 	public void testSetUsbDriverOption() {
-		fail("Not yet implemented");
+		try {
+			readTestVM();
+
+			assertEquals(fileModel.getUsbDriverOption(),
+					"false");
+
+			fileModel.setUsbDriverOption("true");
+
+			useSuccessTestFile();
+
+			assertEquals(fileModel.getUsbDriverOption(), "true");
+		} catch(IOException e) {
+			fail("IOException at this single testCase!");
+		}
 	}
 
-	@Test
-	public void testGetUsbMouseOption() {
-		fail("Not yet implemented");
-	}
-
-	@Test
+@Test
 	public void testSetUsbMouseOption() {
-		fail("Not yet implemented");
+		try {
+			readTestVM();
+	
+			assertEquals(fileModel.getUsbMouseOption(),
+					"true");
+	
+			fileModel.setUsbMouseOption("false");
+	
+			useSuccessTestFile();
+	
+			assertEquals(fileModel.getUsbMouseOption(), "false");
+		} catch(IOException e) {
+			fail("IOException at this single testCase!");
+		}
 	}
 
 	@Test
 	public void testGetUsbTabletOption() {
-		fail("Not yet implemented");
-	}
+		try {
+			readTestVM();
 
-	@Test
-	public void testSetUsbTabletOption() {
-		fail("Not yet implemented");
-	}
+			assertNull(fileModel.getUsbTabletOption());
 
-	@Test
-	public void testGetUsbWacomTabletOption() {
-		fail("Not yet implemented");
+			fileModel.setUsbTabletOption("true");
+
+			useSuccessTestFile();
+
+			assertEquals(fileModel.getUsbTabletOption(), "true");
+		} catch(IOException e) {
+			fail("IOException at this single testCase!");
+		}
 	}
 
 	@Test
 	public void testSetUsbWacomTabletOption() {
-		fail("Not yet implemented");
-	}
+		try {
+			readTestVM();
 
-	@Test
-	public void testGetUsbKeyboardOption() {
-		fail("Not yet implemented");
+			assertEquals(fileModel.getUsbWacomTabletOption(),
+					"false");
+
+			fileModel.setUsbWacomTabletOption("true");
+
+			useSuccessTestFile();
+
+			assertEquals(fileModel.getUsbWacomTabletOption(), "true");
+		} catch(IOException e) {
+			fail("IOException at this single testCase!");
+		}
 	}
 
 	@Test
 	public void testSetUsbKeyboardOption() {
-		fail("Not yet implemented");
+		try {
+			readTestVM();
+
+			assertEquals(fileModel.getUsbKeyboardOption(),
+					"false");
+
+			fileModel.setUsbKeyboardOption("true");
+
+			useSuccessTestFile();
+
+			assertEquals(fileModel.getUsbKeyboardOption(), "true");
+		} catch(IOException e) {
+			fail("IOException at this single testCase!");
+		}
 	}
 
 	@Test
 	public void testGetUsbBrailleOption() {
-		
+		try {
+			readTestVM();
+
+			assertEquals(fileModel.getUsbBrailleOption(), 
+					"false");
+		} catch(IOException e) {
+			fail("IOException at this single testCase!");
+		}
 	}
 
 	@Test
 	public void testGetKernelBootOption() {
-		fail("Not yet implemented");
-	}
+		try {
+			readTestVM();
 
-	@Test
-	public void testSetKernelBootOption() {
-		fail("Not yet implemented");
+			assertNull(fileModel.getKernelBootOption());
+		} catch(IOException e) {
+			fail("IOException at this single testCase!");
+		}
 	}
 
 	@Test
 	public void testGetCustomOptions() {
-		fail("Not yet implemented");
-	}
+		try {
+			readTestVM();
 
-	@Test
-	public void testSetCustomOptions() {
-		fail("Not yet implemented");
+			assertNull(fileModel.getCustomOptions());
+		} catch(IOException e) {
+			fail("IOException at this single testCase!");
+		}
 	}
 }
