@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<JavaQemuMachine>
+    <machineName>TestVM</machineName>
+    <machineType>pc</machineType>
+    <machineAccel1>kvm</machineAccel1>
+    <machineAccel2>tcg</machineAccel2>
+    <machineAccel3>xen</machineAccel3>
+    <machineKvm_shadow_mem>0</machineKvm_shadow_mem>
+    <cpuModel>core2duo</cpuModel>
+    <cpuidFlags>,+sse2,+sse,+acpi,+fpu,+sse4_1,+sse4.1,+sse4_2,+sse4.2,+ssse3,+sse3,+avx2,+3dnow,+3dnowext,+i64</cpuidFlags>
+    <cdrom>/home/daniel/Downloads/isos/Core-11.1.iso</cdrom>
+    <bootOrder1>d</bootOrder1>
+    <bootOrder2>c</bootOrder2>
+    <bootOrder3/>
+    <bootOnce1>c</bootOnce1>
+    <bootOnce2>d</bootOnce2>
+    <bootOnce3/>
+    <bootMenu/>
+    <bootSplash/>
+    <bootSplashTime/>
+    <bootRebootTimeout/>
+    <bootStrict/>
+    <keyboardLayoutLanguage>pt-br</keyboardLayoutLanguage>
+    <firstHardDiskOption>/home/daniel/Documentos/Qemu VMs/TestVM/TestVM.vdi</firstHardDiskOption>
+    <ramSize>128.000</ramSize>
+    <displayType/>
+    <nographicOption>false</nographicOption>
+    <vgaType>cirrus</vgaType>
+    <fullscreenOption>false</fullscreenOption>
+    <win2khackOption>true</win2khackOption>
+    <noacpiOption>true</noacpiOption>
+    <soundHardwareOption>sb16</soundHardwareOption>
+    <rtcOption>base=utc</rtcOption>
+    <nameOption>TestVM</nameOption>
+    <snapshotOption>false</snapshotOption>
+    <noFdBootchkOption>true</noFdBootchkOption>
+    <noHpetOption>true</noHpetOption>
+    <usbDriverOption>false</usbDriverOption>
+    <usbMouseOption>true</usbMouseOption>
+    <usbWacomTabletOption>false</usbWacomTabletOption>
+    <usbKeyboardOption>false</usbKeyboardOption>
+    <usbBrailleOption>false</usbBrailleOption>
+    <usbDiskOption/>
+    <usbSerialOption/>
+    <usbNetOption/>
+</JavaQemuMachine>
