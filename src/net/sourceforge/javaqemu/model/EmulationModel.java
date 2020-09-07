@@ -187,11 +187,25 @@ public class EmulationModel {
         this.execute_before_start_qemu = execute_before_start_qemu;
     }
 
+    private String[] invalidCommands = {
+        "cls"
+    };
+
+    public boolean isInvalid(String command) {
+        for (String invalid : this.invalidCommands) {
+            if (invalid.equals(command)) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
     public boolean postruns(int position, String machineName) {
         if (execute_after_stop_qemu != null) {
             for (String given : execute_after_stop_qemu) {
                 try {
-                    if (!given.isEmpty()) {
+                    if (!given.isEmpty() && !this.isInvalid(given)) {
                         this.myview.showScriptCommand(given);
                         String[] cmdLine = UsabilityModel.getCmdLine(given);
                         if (cmdLine.length == 0) {
