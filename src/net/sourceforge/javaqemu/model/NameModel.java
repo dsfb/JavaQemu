@@ -19,6 +19,10 @@ public class NameModel extends OptionsControl {
     }
 
     public void setOption(String option) {
+        if (option.contains(" ") && !option.startsWith("\"") &&
+                !option.endsWith("\"")) {
+            option = "\"" + option + "\"";
+        }
         super.setOption(option,
                 OptionsEnumModel.NAMEOPTION.getValor());
         this.myfile.getMymodel()
