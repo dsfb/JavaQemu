@@ -38,6 +38,9 @@ public class View extends JFrame {
     private JMenuItem startEmulation;
     private JMenuItem stopEmulation;
 
+    private JMenu optionMenu;
+    private JMenuItem languageSetting;
+
     private JMenu helpMenu;
     private JMenuItem aboutCommand;
 
@@ -82,6 +85,12 @@ public class View extends JFrame {
 
         helpMenu = new JMenu("Help");
         aboutCommand = new JMenuItem("About JavaQemu");
+
+        optionMenu = new JMenu("Options");
+        languageSetting = new JMenuItem("Language:");
+
+        optionMenu.add(languageSetting);
+        menuBar.add(optionMenu);
 
         helpMenu.add(aboutCommand);
         menuBar.add(helpMenu);
