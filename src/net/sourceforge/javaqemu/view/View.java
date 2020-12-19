@@ -92,12 +92,12 @@ public class View extends JFrame {
 
         activePanel = 0;
 
-        this.createNewVMOption = new JButton("Create a new virtual machine");
+        this.createNewVMOption = new JButton("Create a new VM");
 
         this.openExistingVMOption = new JButton(
-                "Open a existing virtual machine");
+                "Open an existing VM");
 
-        useUtilities = new JButton("Use the available utilities from JavaQemu!");
+        useUtilities = new JButton("Use the available utilities");
 
         JPanelCreationView untitledPanel = makeVMPanel("Untitled");
         myUntitledJPanel = untitledPanel;
@@ -177,7 +177,8 @@ public class View extends JFrame {
 
     public void showMessage(String message) {
         JScrollPane scrollPane = new JScrollPane();
-        scrollPane.setPreferredSize(new Dimension(500, 500));
+        int height = message.length() / 500 + 1;
+        scrollPane.setPreferredSize(new Dimension(750, height));
         JTextArea textArea = new JTextArea(message);
         textArea.setLineWrap(true);
         textArea.setWrapStyleWord(true);

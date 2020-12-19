@@ -117,7 +117,7 @@ public class ConfigurationView extends JFileChooserView {
         default_virtual_machines_path_scroller = new JScrollPane(
                 default_virtual_machines_path_choice);
         default_virtual_machines_path_chooser = new JButton(
-                "Choose the Default VM Directory!");
+                "Choose!");
         windowContent.add(default_virtual_machines_path_description);
         windowContent.add(default_virtual_machines_path_scroller);
         windowContent.add(default_virtual_machines_path_chooser);
@@ -136,7 +136,7 @@ public class ConfigurationView extends JFileChooserView {
         firstEmptyLabel = new JLabel("");
         windowContent.add(firstEmptyLabel);
 
-        qemu_executable_path_description = new JLabel("Qemu Executable Path: ");
+        qemu_executable_path_description = new JLabel("QEMU Executable Path: ");
         windowContent.add(qemu_executable_path_description);
 
         qemu_executable_path_choice = new JTextField(0);
@@ -145,7 +145,7 @@ public class ConfigurationView extends JFileChooserView {
         windowContent.add(qemu_executable_path_scroller);
 
         qemu_executable_path_chooser = new JButton(
-                "Choose the Qemu Executable Path!");
+                "Choose!");
         windowContent.add(qemu_executable_path_chooser);
 
         execute_after_stop_qemu_description = new JLabel(
@@ -172,7 +172,7 @@ public class ConfigurationView extends JFileChooserView {
         windowContent.add(qemu_img_executable_path_scroller);
 
         qemu_img_executable_path_chooser = new JButton(
-                "Choose the Qemu-img Executable Path!");
+                "Choose!");
         windowContent.add(qemu_img_executable_path_chooser);
 
         bios_vga_bios_keymaps_path_description = new JLabel(
@@ -185,7 +185,7 @@ public class ConfigurationView extends JFileChooserView {
         windowContent.add(bios_vga_bios_keymaps_path_scroller);
 
         bios_vga_bios_keymaps_path_chooser = new JButton(
-                "Set the BIOS, VGA BIOS and keymaps Path!");
+                "Set!");
         windowContent.add(bios_vga_bios_keymaps_path_chooser);
 
         empty = new JLabel("");
