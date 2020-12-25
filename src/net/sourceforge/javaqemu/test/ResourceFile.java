@@ -14,7 +14,7 @@ public class ResourceFile extends ExternalResource
 {
     String res;
     File file = null;
-    InputStream stream;
+    InputStream stream = null;
 
     public ResourceFile(String res)
     {
@@ -32,12 +32,16 @@ public class ResourceFile extends ExternalResource
 
     public InputStream getInputStream()
     {
-        return stream;
+    	if (stream == null) {
+    		createInputStream();
+    	}
+
+    	return stream;
     }
 
-    public InputStream createInputStream()
+    public void createInputStream()
     {
-        return getClass().getResourceAsStream(res);
+        stream = getClass().getResourceAsStream(res);
     }
 
     public String getContent() throws IOException
@@ -47,7 +51,7 @@ public class ResourceFile extends ExternalResource
 
     public String getContent(String charSet) throws IOException
     {
-        InputStreamReader reader = new InputStreamReader(createInputStream(),
+        InputStreamReader reader = new InputStreamReader(getInputStream(),
             Charset.forName(charSet));
         char[] tmp = new char[4096];
         StringBuilder b = new StringBuilder();
@@ -110,6 +114,10 @@ public class ResourceFile extends ExternalResource
                 byte[] buffer = new byte[4096];
                 while (true)
                 {
+                	if (stream == null) {
+                		break;
+                	}
+
                     int len = stream.read(buffer);
                     if (len < 0)
                     {
@@ -128,7 +136,10 @@ public class ResourceFile extends ExternalResource
         }
         finally
         {
-            stream.close();
+        	if (stream != null) 
+        	{
+        		stream.close();
+        	}
         }
     }
 

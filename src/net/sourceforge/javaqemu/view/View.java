@@ -4,9 +4,12 @@ import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.Insets;
 import java.awt.event.ActionListener;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.imageio.ImageIO;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JMenu;
@@ -21,6 +24,7 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
 import net.sourceforge.javaqemu.model.Model;
+import net.sourceforge.javaqemu.test.ResourceFile;
 
 public class View extends JFrame {
 
@@ -91,9 +95,16 @@ public class View extends JFrame {
         myPanels = new ArrayList<JPanelCreationView>();
 
         activePanel = 0;
-
+        /* TODO: Fix me!
+        try {
+        	ResourceFile newVmRsc = new ResourceFile("addFile.png");
+        	ImageIcon newVm = new ImageIcon(ImageIO.read(newVmRsc.getFile()));
+        	this.createNewVMOption = new JButton(newVm);
+        } catch (IOException e) {
+        	this.createNewVMOption = new JButton("Create a new VM");
+        }
+		*/
         this.createNewVMOption = new JButton("Create a new VM");
-
         this.openExistingVMOption = new JButton(
                 "Open an existing VM");
 
