@@ -1,6 +1,7 @@
 package net.sourceforge.javaqemu.view;
 
 import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.Insets;
 import java.awt.event.ActionListener;
@@ -64,8 +65,10 @@ public class View extends JFrame {
 
         menuBar = new JMenuBar();
 
-        fileMenu = new JMenu("File");
-        configureCommand = new JMenuItem("Configure");
+        this.fileMenu = new JMenu("File");
+        this.fileMenu.setFont(new Font("Arial", Font.BOLD, 12));
+        this.configureCommand = new JMenuItem("Configure");
+        this.configureCommand.setFont(new Font("Arial", Font.BOLD, 12));
         exitCommand = new JMenuItem("Quit");
 
         fileMenu.add(configureCommand);
@@ -93,11 +96,14 @@ public class View extends JFrame {
         activePanel = 0;
 
         this.createNewVMOption = new JButton("Create a new virtual machine");
+        this.createNewVMOption.setFont(new Font("Arial", Font.BOLD, 12));
 
         this.openExistingVMOption = new JButton(
                 "Open a existing virtual machine");
+        this.openExistingVMOption.setFont(new Font("Arial", Font.BOLD, 12));
 
-        useUtilities = new JButton("Use the available utilities from JavaQemu!");
+        this.useUtilities = new JButton("Use the available utilities");
+        this.useUtilities.setFont(new Font("Arial", Font.BOLD, 12));
 
         JPanelCreationView untitledPanel = makeVMPanel("Untitled");
         myUntitledJPanel = untitledPanel;

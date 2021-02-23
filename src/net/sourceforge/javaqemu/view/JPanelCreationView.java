@@ -1,6 +1,7 @@
 package net.sourceforge.javaqemu.view;
 
 import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
@@ -48,6 +49,7 @@ public class JPanelCreationView extends JPanel {
             JButton openExistingVMoption, ActionListener listener,
             JButton useUtilities) {
         super();
+        this.setFont(new Font("Arial", Font.BOLD, 12));
         this.title = title;
         if (title != null && title.equals("Untitled")) {
             JLabel optionsDescription = new JLabel("Options:");
