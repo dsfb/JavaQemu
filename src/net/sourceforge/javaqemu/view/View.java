@@ -10,6 +10,7 @@ import java.util.List;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
@@ -60,53 +61,68 @@ public class View extends JFrame {
 
     private JButton useUtilities;
 
+    private Font defaultFont = new Font("Arial", Font.PLAIN, 12);
+
+    private static Font globalDefaultFont = new Font("Arial", Font.PLAIN, 12);
+
+    public static Font getGlobalDefaultFont() {
+        return globalDefaultFont;
+    }
+
     public View() {
         super();
 
-        menuBar = new JMenuBar();
+        this.menuBar = new JMenuBar();
 
         this.fileMenu = new JMenu("File");
-        this.fileMenu.setFont(new Font("Arial", Font.BOLD, 12));
+        this.fileMenu.setFont(this.defaultFont);
         this.configureCommand = new JMenuItem("Configure");
-        this.configureCommand.setFont(new Font("Arial", Font.BOLD, 12));
-        exitCommand = new JMenuItem("Quit");
+        this.configureCommand.setFont(this.defaultFont);
+        this.exitCommand = new JMenuItem("Quit");
+        this.exitCommand.setFont(this.defaultFont);
 
-        fileMenu.add(configureCommand);
-        fileMenu.add(exitCommand);
-        menuBar.add(fileMenu);
+        this.fileMenu.add(this.configureCommand);
+        this.fileMenu.add(this.exitCommand);
+        this.menuBar.add(this.fileMenu);
 
-        emulationMenu = new JMenu("Emulation");
-        startEmulation = new JMenuItem("Start emulation");
-        stopEmulation = new JMenuItem("Stop emulation");
+        this.emulationMenu = new JMenu("Emulation");
+        this.emulationMenu.setFont(this.defaultFont);
+        this.startEmulation = new JMenuItem("Start emulation");
+        this.startEmulation.setFont(this.defaultFont);
+        this.stopEmulation = new JMenuItem("Stop emulation");
+        this.stopEmulation.setFont(this.defaultFont);
 
-        emulationMenu.add(startEmulation);
-        emulationMenu.add(stopEmulation);
-        menuBar.add(emulationMenu);
+        this.emulationMenu.add(this.startEmulation);
+        this.emulationMenu.add(this.stopEmulation);
+        this.menuBar.add(this.emulationMenu);
 
-        helpMenu = new JMenu("Help");
-        aboutCommand = new JMenuItem("About JavaQemu");
+        this.helpMenu = new JMenu("Help");
+        this.helpMenu.setFont(this.defaultFont);
+        this.aboutCommand = new JMenuItem("About JavaQemu");
+        this.aboutCommand.setFont(this.defaultFont);
 
-        helpMenu.add(aboutCommand);
-        menuBar.add(helpMenu);
+        this.helpMenu.add(this.aboutCommand);
+        this.menuBar.add(this.helpMenu);
 
-        tabbedPane = new JTabbedPane();
+        this.tabbedPane = new JTabbedPane();
+        this.tabbedPane.setFont(this.defaultFont);
+        this.myPanels = new ArrayList<JPanelCreationView>();
 
-        myPanels = new ArrayList<JPanelCreationView>();
-
-        activePanel = 0;
+        this.activePanel = 0;
 
         this.createNewVMOption = new JButton("Create a new virtual machine");
-        this.createNewVMOption.setFont(new Font("Arial", Font.BOLD, 12));
+        this.createNewVMOption.setFont(this.defaultFont);
 
         this.openExistingVMOption = new JButton(
                 "Open a existing virtual machine");
-        this.openExistingVMOption.setFont(new Font("Arial", Font.BOLD, 12));
+        this.openExistingVMOption.setFont(this.defaultFont);
 
         this.useUtilities = new JButton("Use the available utilities");
-        this.useUtilities.setFont(new Font("Arial", Font.BOLD, 12));
+        this.useUtilities.setFont(this.defaultFont);
 
         JPanelCreationView untitledPanel = makeVMPanel("Untitled");
         myUntitledJPanel = untitledPanel;
+
         this.myPanels.add(this.myPanels.size(), untitledPanel);
 
         tabbedPane.addTab("Untitled", untitledPanel);
@@ -185,6 +201,7 @@ public class View extends JFrame {
         JScrollPane scrollPane = new JScrollPane();
         scrollPane.setPreferredSize(new Dimension(500, 500));
         JTextArea textArea = new JTextArea(message);
+        textArea.setFont(this.defaultFont);
         textArea.setLineWrap(true);
         textArea.setWrapStyleWord(true);
         textArea.setEditable(false);
@@ -195,7 +212,9 @@ public class View extends JFrame {
     }
 
     public String getInputMessage(String message) {
-        return JOptionPane.showInputDialog(message);
+        JLabel label = new JLabel(message);
+        label.setFont(this.defaultFont);
+        return JOptionPane.showInputDialog(label);
     }
 
     private void initialize_window() {
@@ -203,20 +222,18 @@ public class View extends JFrame {
     }
 
     private void rechecks() {
-    	System.out.println("Repainting screen now...");
+        System.out.println("Repainting screen now...");
         this.pack();
         this.repaint();
     }
 
     public JPanelCreationView makeVMPanel(String machineName) {
         JPanelCreationView panel = null;
-        System.out.println("Instantiating a new JPanelCreationView");
         panel = new JPanelCreationView(machineName,
                 this.createNewVMOption,
                 this.openExistingVMOption,
                 this.listener,
                 this.useUtilities);
-        System.out.println("Instantiated a new JPanelCreationView");
         return panel;
     }
 

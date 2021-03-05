@@ -90,6 +90,7 @@ public class DiskCreationView extends JFrame {
                 + execQemu_img[0] + " " + execQemu_img[1] + " "
                 + execQemu_img[2] + " " + execQemu_img[3] + " "
                 + execQemu_img[4]);
+        textArea.setFont(View.getGlobalDefaultFont());
         textArea.setLineWrap(true);
         textArea.setWrapStyleWord(true);
         textArea.setEditable(false);

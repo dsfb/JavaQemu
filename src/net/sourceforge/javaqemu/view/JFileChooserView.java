@@ -32,6 +32,7 @@ public class JFileChooserView extends JFrame {
         this.currentDirectory = ".";
         this.fileExtension = ".xml";
         this.setChooser(new JFileChooser());
+        this.setFont(View.getGlobalDefaultFont());
     }
 
     public JFileChooser getChooser() {
@@ -40,6 +41,7 @@ public class JFileChooserView extends JFrame {
 
     public void setChooser(JFileChooser chooser) {
         this.chooser = chooser;
+        this.chooser.setFont(View.getGlobalDefaultFont());
     }
 
     public String getChoosertitle() {

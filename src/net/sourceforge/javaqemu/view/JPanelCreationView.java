@@ -49,11 +49,11 @@ public class JPanelCreationView extends JPanel {
             JButton openExistingVMoption, ActionListener listener,
             JButton useUtilities) {
         super();
-        this.setFont(new Font("Arial", Font.BOLD, 12));
+        this.setFont(View.getGlobalDefaultFont());
         this.title = title;
         if (title != null && title.equals("Untitled")) {
             JLabel optionsDescription = new JLabel("Options:");
-
+            optionsDescription.setFont(View.getGlobalDefaultFont());
             optionsDescription.setHorizontalAlignment(JLabel.CENTER);
 
             this.setLayout(new GridLayout(4, 1));
@@ -72,25 +72,25 @@ public class JPanelCreationView extends JPanel {
             this.title = title;
 
             this.titleLabel = new JLabel(title);
-
+            this.titleLabel.setFont(View.getGlobalDefaultFont());
             this.closeButton = new JButton("Close this VM");
-
+            this.closeButton.setFont(View.getGlobalDefaultFont());
             this.changeMachineNameButton = new JButton(
                     "Change the name of this VM");
-
-            startButton = new JButton("Start");
-
-            stopButton = new JButton("Stop");
-
+            this.changeMachineNameButton.setFont(View.getGlobalDefaultFont());
+            this.startButton = new JButton("Start");
+            this.startButton.setFont(View.getGlobalDefaultFont());
+            this.stopButton = new JButton("Stop");
+            this.stopButton.setFont(View.getGlobalDefaultFont());
             this.machineNameLabel = new JLabel("Machine name: ");
-
+            this.machineNameLabel.setFont(View.getGlobalDefaultFont());
             this.changeMachineConfigurationButton = new JButton(
                     "Change VM Configuration");
-
+            this.changeMachineConfigurationButton.setFont(View.getGlobalDefaultFont());
             this.saveVMButton = new JButton("Save this VM");
-
+            this.saveVMButton.setFont(View.getGlobalDefaultFont());
             this.seeQemuEmulationCommandLineButton = new JButton("See Qemu emulation command line");
-
+            this.seeQemuEmulationCommandLineButton.setFont(View.getGlobalDefaultFont());
             gridBagConstraints.fill = GridBagConstraints.HORIZONTAL;
             gridBagConstraints.gridx = 0;
             gridBagConstraints.gridy = 0;
@@ -228,6 +228,7 @@ public class JPanelCreationView extends JPanel {
     public void setTitle(String title) {
         this.title = title;
         this.titleLabel.setText(title);
+        this.titleLabel.setFont(View.getGlobalDefaultFont());
     }
 
     public String getRamSize() {

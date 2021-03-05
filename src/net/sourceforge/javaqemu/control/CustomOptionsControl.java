@@ -14,6 +14,7 @@ import net.sourceforge.javaqemu.model.CustomOptionsModel;
 import net.sourceforge.javaqemu.model.Model;
 import net.sourceforge.javaqemu.view.CustomOptionsView;
 import net.sourceforge.javaqemu.view.UtilitiesView;
+import net.sourceforge.javaqemu.view.View;
 
 public class CustomOptionsControl implements ActionListener {
 
@@ -107,6 +108,7 @@ public class CustomOptionsControl implements ActionListener {
                     JScrollPane scrollPane = new JScrollPane();
                     scrollPane.setPreferredSize(new Dimension(500, 500));
                     JTextArea textArea = new JTextArea(message);
+                    textArea.setFont(View.getGlobalDefaultFont());
                     textArea.setLineWrap(true);
                     textArea.setWrapStyleWord(true);
                     textArea.setEditable(false);

@@ -19,7 +19,7 @@ import net.sourceforge.javaqemu.control.XStreamControl;
 
 public class Model {
 
-    private static String version = "v0.4.0";
+    private static String version = "v0.4.0a2";
 
     public static String getApplicationVersionString() {
         return version;

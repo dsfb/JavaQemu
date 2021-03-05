@@ -32,7 +32,7 @@ public class ConfigurationView extends JFileChooserView {
     private JMenu fileMenu;
     private JMenuItem saveConfiguration;
     private JMenuItem openConfiguration;
-    private JMenuItem exitCommand;
+    private JMenuItem closeCommand;
 
     private JLabel default_virtual_machines_path_description;
 
@@ -66,7 +66,7 @@ public class ConfigurationView extends JFileChooserView {
 
     private JTextArea execute_after_stop_qemu_choices;
 
-    private JButton ok, hide;
+    private JButton ok, close;
 
     private JButton qemu_executable_path_chooser;
 
@@ -97,15 +97,18 @@ public class ConfigurationView extends JFileChooserView {
         menuBar = new JMenuBar();
 
         fileMenu = new JMenu("File");
-
+        fileMenu.setFont(View.getGlobalDefaultFont());
         openConfiguration = new JMenuItem("Open configuration");
+        openConfiguration.setFont(View.getGlobalDefaultFont());
         fileMenu.add(openConfiguration);
 
         saveConfiguration = new JMenuItem("Save Configuration");
+        saveConfiguration.setFont(View.getGlobalDefaultFont());
         fileMenu.add(saveConfiguration);
 
-        exitCommand = new JMenuItem("Quit");
-        fileMenu.add(exitCommand);
+        closeCommand = new JMenuItem("Close");
+        closeCommand.setFont(View.getGlobalDefaultFont());
+        fileMenu.add(closeCommand);
 
         menuBar.add(fileMenu);
 
@@ -113,17 +116,20 @@ public class ConfigurationView extends JFileChooserView {
 
         default_virtual_machines_path_description = new JLabel(
                 "Default Virtual Machines Path: ");
+        default_virtual_machines_path_description.setFont(View.getGlobalDefaultFont());
         default_virtual_machines_path_choice = new JTextField(0);
         default_virtual_machines_path_scroller = new JScrollPane(
                 default_virtual_machines_path_choice);
         default_virtual_machines_path_chooser = new JButton(
                 "Choose the Default VM Directory!");
+        default_virtual_machines_path_chooser.setFont(View.getGlobalDefaultFont());
         windowContent.add(default_virtual_machines_path_description);
         windowContent.add(default_virtual_machines_path_scroller);
         windowContent.add(default_virtual_machines_path_chooser);
 
         execute_before_start_qemu_description = new JLabel(
                 "Execute before start QEMU:");
+        execute_before_start_qemu_description.setFont(View.getGlobalDefaultFont());
         windowContent.add(execute_before_start_qemu_description);
 
         execute_before_start_qemu_choices = new JTextArea("", 3, 30);
@@ -137,22 +143,28 @@ public class ConfigurationView extends JFileChooserView {
         windowContent.add(firstEmptyLabel);
 
         qemu_executable_path_description = new JLabel("Qemu Executable Path: ");
+        qemu_executable_path_description.setFont(View.getGlobalDefaultFont());
         windowContent.add(qemu_executable_path_description);
 
         qemu_executable_path_choice = new JTextField(0);
+        qemu_executable_path_choice.setFont(View.getGlobalDefaultFont());
         qemu_executable_path_scroller = new JScrollPane(
                 qemu_executable_path_choice);
+        qemu_executable_path_scroller.setFont(View.getGlobalDefaultFont());
         windowContent.add(qemu_executable_path_scroller);
 
         qemu_executable_path_chooser = new JButton(
                 "Choose the Qemu Executable Path!");
+        qemu_executable_path_chooser.setFont(View.getGlobalDefaultFont());
         windowContent.add(qemu_executable_path_chooser);
 
         execute_after_stop_qemu_description = new JLabel(
                 "Execute after stop QEMU:");
+        execute_after_stop_qemu_description.setFont(View.getGlobalDefaultFont());
         windowContent.add(execute_after_stop_qemu_description);
 
         execute_after_stop_qemu_choices = new JTextArea("", 3, 30);
+        execute_after_stop_qemu_choices.setFont(View.getGlobalDefaultFont());
         execute_after_stop_qemu_choices.setLineWrap(true);
         execute_after_stop_qemu_choices.setWrapStyleWord(true);
 
@@ -164,38 +176,46 @@ public class ConfigurationView extends JFileChooserView {
 
         qemu_img_executable_path_description = new JLabel(
                 "Qemu-img Executable Path: ");
+        qemu_img_executable_path_description.setFont(View.getGlobalDefaultFont());
         windowContent.add(qemu_img_executable_path_description);
 
         qemu_img_executable_path_choice = new JTextField(0);
+        qemu_img_executable_path_choice.setFont(View.getGlobalDefaultFont());
         qemu_img_executable_path_scroller = new JScrollPane(
                 qemu_img_executable_path_choice);
         windowContent.add(qemu_img_executable_path_scroller);
 
         qemu_img_executable_path_chooser = new JButton(
                 "Choose the Qemu-img Executable Path!");
+        qemu_img_executable_path_chooser.setFont(View.getGlobalDefaultFont());
         windowContent.add(qemu_img_executable_path_chooser);
 
         bios_vga_bios_keymaps_path_description = new JLabel(
                 "BIOS, VGA BIOS and keymaps Path:");
+        bios_vga_bios_keymaps_path_description.setFont(View.getGlobalDefaultFont());
         windowContent.add(bios_vga_bios_keymaps_path_description);
 
         bios_vga_bios_keymaps_path_choice = new JTextField(0);
+        bios_vga_bios_keymaps_path_choice.setFont(View.getGlobalDefaultFont());
         bios_vga_bios_keymaps_path_scroller = new JScrollPane(
                 bios_vga_bios_keymaps_path_choice);
         windowContent.add(bios_vga_bios_keymaps_path_scroller);
 
         bios_vga_bios_keymaps_path_chooser = new JButton(
                 "Set the BIOS, VGA BIOS and keymaps Path!");
+        bios_vga_bios_keymaps_path_chooser.setFont(View.getGlobalDefaultFont());
         windowContent.add(bios_vga_bios_keymaps_path_chooser);
 
         empty = new JLabel("");
         windowContent.add(empty);
 
         ok = new JButton("OK");
+        ok.setFont(View.getGlobalDefaultFont());
         windowContent.add(ok);
 
-        hide = new JButton("Hide");
-        windowContent.add(hide);
+        close = new JButton("Close");
+        close.setFont(View.getGlobalDefaultFont());
+        windowContent.add(close);
 
         initialize();
     }
@@ -217,10 +237,10 @@ public class ConfigurationView extends JFileChooserView {
     }
 
     public void configureListener(ActionListener listener) {
-        exitCommand.addActionListener(listener);
+        closeCommand.addActionListener(listener);
         default_virtual_machines_path_chooser.addActionListener(listener);
         ok.addActionListener(listener);
-        hide.addActionListener(listener);
+        close.addActionListener(listener);
         qemu_executable_path_chooser.addActionListener(listener);
         qemu_img_executable_path_chooser.addActionListener(listener);
         saveConfiguration.addActionListener(listener);
@@ -229,11 +249,11 @@ public class ConfigurationView extends JFileChooserView {
     }
 
     public void configureStandardMode() {
-        exitCommand.setActionCommand("ExitCommand");
+        closeCommand.setActionCommand("ExitCommand");
         default_virtual_machines_path_chooser
                 .setActionCommand("DirectoryChooser");
         ok.setActionCommand("OK");
-        hide.setActionCommand("Hide");
+        close.setActionCommand("Hide");
         qemu_executable_path_chooser.setActionCommand("QemuChooser");
         qemu_img_executable_path_chooser.setActionCommand("QemuImgChooser");
         saveConfiguration.setActionCommand("SaveConfiguration");
@@ -278,6 +298,7 @@ public class ConfigurationView extends JFileChooserView {
         JScrollPane scrollPane = new JScrollPane();
         scrollPane.setPreferredSize(new Dimension(500, 500));
         JTextArea textArea = new JTextArea(message);
+        textArea.setFont(View.getGlobalDefaultFont());
         textArea.setLineWrap(true);
         textArea.setWrapStyleWord(true);
         textArea.setEditable(false);
