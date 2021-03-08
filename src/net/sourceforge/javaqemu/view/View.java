@@ -1,5 +1,6 @@
 package net.sourceforge.javaqemu.view;
 
+import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridLayout;
@@ -75,50 +76,45 @@ public class View extends JFrame {
         this.menuBar = new JMenuBar();
 
         this.fileMenu = new JMenu("File");
-        this.fileMenu.setFont(this.defaultFont);
+
         this.configureCommand = new JMenuItem("Configure");
-        this.configureCommand.setFont(this.defaultFont);
+
         this.exitCommand = new JMenuItem("Quit");
-        this.exitCommand.setFont(this.defaultFont);
+
 
         this.fileMenu.add(this.configureCommand);
         this.fileMenu.add(this.exitCommand);
         this.menuBar.add(this.fileMenu);
 
         this.emulationMenu = new JMenu("Emulation");
-        this.emulationMenu.setFont(this.defaultFont);
+
         this.startEmulation = new JMenuItem("Start emulation");
-        this.startEmulation.setFont(this.defaultFont);
+
         this.stopEmulation = new JMenuItem("Stop emulation");
-        this.stopEmulation.setFont(this.defaultFont);
 
         this.emulationMenu.add(this.startEmulation);
         this.emulationMenu.add(this.stopEmulation);
         this.menuBar.add(this.emulationMenu);
 
         this.helpMenu = new JMenu("Help");
-        this.helpMenu.setFont(this.defaultFont);
+
         this.aboutCommand = new JMenuItem("About JavaQemu");
-        this.aboutCommand.setFont(this.defaultFont);
 
         this.helpMenu.add(this.aboutCommand);
         this.menuBar.add(this.helpMenu);
 
         this.tabbedPane = new JTabbedPane();
-        this.tabbedPane.setFont(this.defaultFont);
+
         this.myPanels = new ArrayList<JPanelCreationView>();
 
         this.activePanel = 0;
 
         this.createNewVMOption = new JButton("Create a new virtual machine");
-        this.createNewVMOption.setFont(this.defaultFont);
 
         this.openExistingVMOption = new JButton(
                 "Open a existing virtual machine");
-        this.openExistingVMOption.setFont(this.defaultFont);
 
         this.useUtilities = new JButton("Use the available utilities");
-        this.useUtilities.setFont(this.defaultFont);
 
         JPanelCreationView untitledPanel = makeVMPanel("Untitled");
         myUntitledJPanel = untitledPanel;
@@ -132,6 +128,19 @@ public class View extends JFrame {
                 processTabChange();
             }
         });
+
+        Component[] components = {
+            this.fileMenu, this.configureCommand,
+            this.exitCommand, this.emulationMenu,
+            this.startEmulation, this.stopEmulation,
+            this.helpMenu, this.aboutCommand,
+            this.tabbedPane, this.createNewVMOption,
+            this.openExistingVMOption, this.useUtilities
+        };
+
+        for (Component component : components) {
+            component.setFont(this.defaultFont);
+        }
 
         this.gridLayout = new GridLayout(1, 1);
 
