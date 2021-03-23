@@ -23,6 +23,8 @@ public class Control implements ActionListener {
     private View view;
     private ConfigurationControl mycontrol;
     private EmulationControl myemulation;
+    // TODO: Put this class in composition with:
+    // class VMControl.
     private VMCreationControl mycreation;
     private DiskCreationControl mydisk;
     private FileControl myfile;
@@ -106,6 +108,9 @@ public class Control implements ActionListener {
             } else {
                 this.mycontrol.do_my_view_visible();
             }
+        } else if (e.getActionCommand().equals("ShowFilePath")) { 
+        	this.view.showMessage("The file path is: " + 
+        			this.view.getSelectedPanel().getFilePath());
         } else if (e.getActionCommand().equals("StartEmulation")) {
             if (this.myemulation == null) {
                 this.myemulation = new EmulationControl(this.view);
@@ -188,11 +193,10 @@ public class Control implements ActionListener {
                 this.myemulation = new EmulationControl(view);
             }
             if (this.mycontrol == null) {
-                this.view
-                        .showMessage("Please, configure the required options first!\n"
-                                + "Please, configure the path of the qemu-img executable first!");
                 this.mycontrol = new ConfigurationControl(myLastUsedFolderModel, myLastUsedFileModel);
-            } else if (this.mycontrol.getQemu_img_executable_path() == null
+            } 
+            // TODO: Assert that new VM is created even if the JavaQEMU's configuration is loaded or not. 
+            if (this.mycontrol.getQemu_img_executable_path() == null
                     || this.mycontrol.getQemu_img_executable_path()
                     .getText().isEmpty()) {
                 this.view

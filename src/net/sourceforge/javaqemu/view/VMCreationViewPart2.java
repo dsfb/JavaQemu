@@ -6,13 +6,15 @@ import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.ActionListener;
 
-import javax.swing.JButton;
-import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
+
+import net.sourceforge.javaqemu.view.defined.Button;
+import net.sourceforge.javaqemu.view.defined.Label;
+import net.sourceforge.javaqemu.view.defined.TextField;
 
 public class VMCreationViewPart2 extends JFileChooserView {
 
@@ -24,27 +26,27 @@ public class VMCreationViewPart2 extends JFileChooserView {
 
     private GridBagConstraints gridBagConstraints;
 
-    private JLabel windowDescriptionLabel;
+    private Label windowDescriptionLabel;
 
-    private JLabel chooseMachineName_descriptionLabel;
+    private Label chooseMachineName_descriptionLabel;
 
-    private JLabel chooseMachineName_choiceLabel;
+    private Label chooseMachineName_choiceLabel;
 
-    private JLabel chooseVMPathLabel;
+    private Label chooseVMPathLabel;
 
-    private JTextField chooseVMPathField;
+    private TextField chooseVMPathField;
 
-    private JButton cancelButton;
+    private Button cancelButton;
 
-    private JButton backButton;
+    private Button backButton;
 
-    private JButton nextButton;
+    private Button nextButton;
 
     private String chooseMachineName;
 
     private String basePath;
 
-    private JButton virtual_machine_path_chooser;
+    private Button virtual_machine_path_chooser;
 
     public VMCreationViewPart2(String default_virtual_machines_path,
             String additionalPath) {
@@ -59,20 +61,20 @@ public class VMCreationViewPart2 extends JFileChooserView {
 
         this.setJpanel(windowContent);
 
-        windowDescriptionLabel = new JLabel(
+        windowDescriptionLabel = new Label(
                 "Choose location for the new machine:");
 
-        chooseMachineName_descriptionLabel = new JLabel("Name:");
+        chooseMachineName_descriptionLabel = new Label("Name:");
 
-        chooseMachineName_choiceLabel = new JLabel();
+        chooseMachineName_choiceLabel = new Label();
 
-        chooseVMPathLabel = new JLabel("Path:");
+        chooseVMPathLabel = new Label("Path:");
 
-        chooseVMPathField = new JTextField(0);
+        chooseVMPathField = new TextField(0);
         this.basePath = default_virtual_machines_path
                 + additionalPath;
 
-        virtual_machine_path_chooser = new JButton(
+        virtual_machine_path_chooser = new Button(
                 "Choose a VM Directory!");
 
         gridBagConstraints.fill = GridBagConstraints.HORIZONTAL;
@@ -109,11 +111,11 @@ public class VMCreationViewPart2 extends JFileChooserView {
         gridBagConstraints.gridy = 2;
         windowContent.add(virtual_machine_path_chooser, gridBagConstraints);
 
-        cancelButton = new JButton("Cancel");
+        cancelButton = new Button("Cancel");
 
-        backButton = new JButton("< Back");
+        backButton = new Button("< Back");
 
-        nextButton = new JButton("Next >");
+        nextButton = new Button("Next >");
 
         gridBagConstraints.fill = GridBagConstraints.HORIZONTAL;
         gridBagConstraints.gridx = 0;

@@ -6,7 +6,6 @@ import java.awt.Insets;
 import java.awt.event.ActionListener;
 import java.text.DecimalFormat;
 
-import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -17,6 +16,8 @@ import javax.swing.SpinnerModel;
 import javax.swing.SpinnerNumberModel;
 import javax.swing.SwingConstants;
 
+import net.sourceforge.javaqemu.view.defined.Button;
+
 public class VMConfigurationView extends JFileChooserView {
 
     private static final long serialVersionUID = 1L;
@@ -25,9 +26,9 @@ public class VMConfigurationView extends JFileChooserView {
 
     private GridLayout gridLayout;
 
-    private JButton okButton;
+    private Button okButton;
 
-    private JButton resetRamSizeButton;
+    private Button resetRamSizeButton;
 
     private View myview;
 
@@ -41,45 +42,45 @@ public class VMConfigurationView extends JFileChooserView {
 
     private DecimalFormat format;
 
-    private JButton changeDiskImagePaths;
+    private Button changeDiskImagePaths;
 
-    private JButton showDisplayOptions;
+    private Button showDisplayOptions;
 
-    private JButton showAdvancedOptions;
+    private Button showAdvancedOptions;
 
-    private JButton showMachineOptions;
+    private Button showMachineOptions;
 
-    private JButton showCPUOptions;
+    private Button showCPUOptions;
 
-    private JButton showCDROMOptions;
+    private Button showCDROMOptions;
 
-    private JButton showFloppyOptions;
+    private Button showFloppyOptions;
 
-    private JButton showBootOptions;
+    private Button showBootOptions;
 
-    private JButton showKeyboardOptions;
+    private Button showKeyboardOptions;
 
-    private JButton showSoundHardwareOptions;
+    private Button showSoundHardwareOptions;
 
-    private JButton showSMPOptions;
+    private Button showSMPOptions;
 
-    private JButton showNUMAOptions;
+    private Button showNUMAOptions;
 
-    private JButton showOtherMemoryOptions;
+    private Button showOtherMemoryOptions;
 
-    private JButton showNetworkOptions;
+    private Button showNetworkOptions;
 
-    private JButton showRtcOptions;
+    private Button showRtcOptions;
 
-    private JButton showImageOptions;
+    private Button showImageOptions;
 
-    private JButton showMonitorOptions;
+    private Button showMonitorOptions;
 
-    private JButton showUSBOptions;
+    private Button showUSBOptions;
 
-    private JButton showSpecificBootOptions;
+    private Button showSpecificBootOptions;
 
-    private JButton showCustomOptions;
+    private Button showCustomOptions;
 
     private JLabel temp[];
 
@@ -90,9 +91,9 @@ public class VMConfigurationView extends JFileChooserView {
         this.initialize();
         this.setJpanel(jContentPane);
 
-        this.okButton = new JButton("OK");
+        this.okButton = new Button("OK");
 
-        this.resetRamSizeButton = new JButton("Reset RAM Size & Hide");
+        this.resetRamSizeButton = new Button("Reset RAM Size & Hide");
 
         this.setChoosertitle("Please, choose a file!");
 
@@ -119,10 +120,10 @@ public class VMConfigurationView extends JFileChooserView {
 
         this.jContentPane.add(this.ramSize);
 
-        changeDiskImagePaths = new JButton("Change the Hard Disk Options.");
+        changeDiskImagePaths = new Button("Change the Hard Disk Options.");
 
-        showDisplayOptions = new JButton("Change Display Options!");
-        showAdvancedOptions = new JButton("Change Advanced Options!");
+        showDisplayOptions = new Button("Change Display Options!");
+        showAdvancedOptions = new Button("Change Advanced Options!");
 
         temp = new JLabel[3];
         for (int i = 0; i < temp.length; i++) {
@@ -134,62 +135,62 @@ public class VMConfigurationView extends JFileChooserView {
         jContentPane.add(this.showDisplayOptions);
         jContentPane.add(this.showAdvancedOptions);
 
-        showMachineOptions = new JButton("Change Machine Options!");
+        showMachineOptions = new Button("Change Machine Options!");
         new JLabel("");
 
         jContentPane.add(this.showMachineOptions);
 
-        showCPUOptions = new JButton("Change CPU Options!");
+        showCPUOptions = new Button("Change CPU Options!");
         jContentPane.add(this.showCPUOptions);
 
-        this.showCDROMOptions = new JButton("Change CDROM Options!");
+        this.showCDROMOptions = new Button("Change CDROM Options!");
 
         jContentPane.add(this.showCDROMOptions);
 
-        this.showFloppyOptions = new JButton("Change Floppy Options!");
+        this.showFloppyOptions = new Button("Change Floppy Options!");
 
         jContentPane.add(this.showFloppyOptions);
 
-        this.showBootOptions = new JButton("Change Boot Options!");
+        this.showBootOptions = new Button("Change Boot Options!");
 
         jContentPane.add(this.showBootOptions);
 
-        this.showKeyboardOptions = new JButton("Change Keyboard Options!");
+        this.showKeyboardOptions = new Button("Change Keyboard Options!");
 
         jContentPane.add(this.showKeyboardOptions);
 
-        this.showSoundHardwareOptions = new JButton("Change Sound Hardware Options!");
+        this.showSoundHardwareOptions = new Button("Change Sound Hardware Options!");
 
         jContentPane.add(this.showSoundHardwareOptions);
 
-        this.showSMPOptions = new JButton("Change SMP System Options!");
-        this.showNUMAOptions = new JButton("Change NUMA Options!");
+        this.showSMPOptions = new Button("Change SMP System Options!");
+        this.showNUMAOptions = new Button("Change NUMA Options!");
 
         jContentPane.add(this.showSMPOptions);
         jContentPane.add(this.showNUMAOptions);
 
-        this.showOtherMemoryOptions = new JButton("Change Other Memory Options!");
+        this.showOtherMemoryOptions = new Button("Change Other Memory Options!");
         jContentPane.add(this.showOtherMemoryOptions);
 
-        this.showNetworkOptions = new JButton("Change Network Options!");
+        this.showNetworkOptions = new Button("Change Network Options!");
         jContentPane.add(this.showNetworkOptions);
 
-        this.showRtcOptions = new JButton("Change RTC Options!");
+        this.showRtcOptions = new Button("Change RTC Options!");
         jContentPane.add(this.showRtcOptions);
 
-        this.showImageOptions = new JButton("Change Image Options!");
+        this.showImageOptions = new Button("Change Image Options!");
         jContentPane.add(this.showImageOptions);
 
-        this.showMonitorOptions = new JButton("Change Monitor Options!");
+        this.showMonitorOptions = new Button("Change Monitor Options!");
         jContentPane.add(this.showMonitorOptions);
 
-        this.showUSBOptions = new JButton("Change USB Options!");
+        this.showUSBOptions = new Button("Change USB Options!");
         jContentPane.add(this.showUSBOptions);
 
-        this.showSpecificBootOptions = new JButton("Change Specific Boot Options!");
+        this.showSpecificBootOptions = new Button("Change Specific Boot Options!");
         jContentPane.add(this.showSpecificBootOptions);
 
-        this.showCustomOptions = new JButton("Change Custom Options!");
+        this.showCustomOptions = new Button("Change Custom Options!");
         jContentPane.add(this.showCustomOptions);
 
         jContentPane.add(this.temp[1]);

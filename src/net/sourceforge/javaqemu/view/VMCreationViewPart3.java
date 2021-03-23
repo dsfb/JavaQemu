@@ -5,11 +5,9 @@ import java.awt.GridBagLayout;
 import java.awt.event.ActionListener;
 import java.text.DecimalFormat;
 
-import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
-import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JSpinner;
@@ -17,6 +15,14 @@ import javax.swing.JTextField;
 import javax.swing.SpinnerModel;
 import javax.swing.SpinnerNumberModel;
 import javax.swing.SwingConstants;
+
+import net.sourceforge.javaqemu.view.defined.Button;
+import net.sourceforge.javaqemu.view.defined.CheckBox;
+import net.sourceforge.javaqemu.view.defined.ComboBox;
+import net.sourceforge.javaqemu.view.defined.Label;
+import net.sourceforge.javaqemu.view.defined.RadioButton;
+import net.sourceforge.javaqemu.view.defined.Spinner;
+import net.sourceforge.javaqemu.view.defined.TextField;
 
 public class VMCreationViewPart3 extends JFrame {
 
@@ -28,11 +34,11 @@ public class VMCreationViewPart3 extends JFrame {
 
     private GridBagConstraints gridBagConstraints;
 
-    private JLabel windowDescription;
+    private Label windowDescription;
 
-    private JLabel diskImageSizeDescription;
+    private Label diskImageSizeDescription;
 
-    private JSpinner diskImageSize;
+    private Spinner diskImageSize;
 
     private SpinnerModel spinnerModel;
 
@@ -40,45 +46,45 @@ public class VMCreationViewPart3 extends JFrame {
 
     private DecimalFormat format;
 
-    private JLabel measureUnity;
+    private Label measureUnity;
 
-    private JButton cancelButton;
+    private Button cancelButton;
 
-    private JButton backButton;
+    private Button backButton;
 
-    private JButton finishButton;
+    private Button finishButton;
 
-    private JLabel diskNameDescription;
+    private Label diskNameDescription;
 
-    private JTextField diskName;
+    private TextField diskName;
 
-    private JLabel diskExtensionDescription;
+    private Label diskExtensionDescription;
 
-    private JComboBox<String> diskExtension;
+    private ComboBox<String> diskExtension;
 
     private String oldDiskExtension;
 
     private boolean suboptions;
 
-    private JCheckBox encryption_box;
+    private CheckBox encryption_box;
 
-    private JCheckBox preallocation_metadata_box;
+    private CheckBox preallocation_metadata_box;
 
-    private JCheckBox cluster_size_box;
+    private CheckBox cluster_size_box;
 
-    private JComboBox<String> cluster_size_options;
+    private ComboBox<String> cluster_size_options;
 
-    private JRadioButton static_vdi_box;
+    private RadioButton static_vdi_box;
 
-    private JCheckBox compat6_vmdk_box;
+    private CheckBox compat6_vmdk_box;
 
-    private JCheckBox subformat_vmdk_box;
+    private CheckBox subformat_vmdk_box;
 
-    private JComboBox<String> subformat_vmdk_combo;
+    private ComboBox<String> subformat_vmdk_combo;
 
-    private JRadioButton subformat_vpc_box;
+    private RadioButton subformat_vpc_box;
 
-    private JComboBox<String> subformat_vpc_combo;
+    private ComboBox<String> subformat_vpc_combo;
 
     public VMCreationViewPart3() {
         super();
@@ -90,16 +96,16 @@ public class VMCreationViewPart3 extends JFrame {
 
         windowContent.setLayout(gridBagLayout);
 
-        windowDescription = new JLabel("Specify disk image details:");
+        windowDescription = new Label("Specify disk image details:");
 
-        diskImageSizeDescription = new JLabel("Disk image size:");
+        diskImageSizeDescription = new Label("Disk image size:");
 
         this.spinnerModel = new SpinnerNumberModel(0.0, // initial value
                 0.0, // min
                 4096.0, // max
                 1); // step
 
-        this.diskImageSize = new JSpinner(spinnerModel);
+        this.diskImageSize = new Spinner(spinnerModel);
 
         editor = (JSpinner.NumberEditor) this.diskImageSize
                 .getEditor();
@@ -107,13 +113,13 @@ public class VMCreationViewPart3 extends JFrame {
         format.setMinimumFractionDigits(3);
         editor.getTextField().setHorizontalAlignment(SwingConstants.CENTER);
 
-        this.measureUnity = new JLabel("GB");
+        this.measureUnity = new Label("GB");
 
-        cancelButton = new JButton("Cancel");
+        cancelButton = new Button("Cancel");
 
-        backButton = new JButton("< Back");
+        backButton = new Button("< Back");
 
-        finishButton = new JButton("Finish");
+        finishButton = new Button("Finish");
 
         gridBagConstraints.fill = GridBagConstraints.HORIZONTAL;
         gridBagConstraints.gridx = 0;
@@ -144,9 +150,9 @@ public class VMCreationViewPart3 extends JFrame {
 
         windowContent.add(measureUnity, gridBagConstraints);
 
-        diskNameDescription = new JLabel("Type the name of the disk image file:");
+        diskNameDescription = new Label("Type the name of the disk image file:");
 
-        diskName = new JTextField("");
+        diskName = new TextField("");
 
         gridBagConstraints.fill = GridBagConstraints.HORIZONTAL;
         gridBagConstraints.gridx = 0;
@@ -160,11 +166,11 @@ public class VMCreationViewPart3 extends JFrame {
 
         windowContent.add(diskName, gridBagConstraints);
 
-        diskExtensionDescription = new JLabel("Choose the format of the disk image file:");
+        diskExtensionDescription = new Label("Choose the format of the disk image file:");
 
         String[] formats = {".img", ".qcow2", ".qcow", ".cow", ".vdi", ".vmdk", ".vpc"};
 
-        diskExtension = new JComboBox<String>(formats);
+        diskExtension = new ComboBox<String>(formats);
         diskExtension.setSelectedIndex(0);
 
         gridBagConstraints.fill = GridBagConstraints.HORIZONTAL;
@@ -201,34 +207,34 @@ public class VMCreationViewPart3 extends JFrame {
 
         oldDiskExtension = (String) diskExtension.getSelectedItem();
 
-        encryption_box = new JCheckBox("Encryption mode: on");
+        encryption_box = new CheckBox("Encryption mode: on");
 
-        preallocation_metadata_box = new JCheckBox("Preallocation mode: metadata");
+        preallocation_metadata_box = new CheckBox("Preallocation mode: metadata");
 
-        cluster_size_box = new JCheckBox("Cluster_size:");
+        cluster_size_box = new CheckBox("Cluster_size:");
 
         String[] sizes = {"512k", "1M", "2M"};
 
-        cluster_size_options = new JComboBox<String>(sizes);
+        cluster_size_options = new ComboBox<String>(sizes);
         cluster_size_options.setSelectedIndex(0);
 
-        static_vdi_box = new JRadioButton("Static option: on");
+        static_vdi_box = new RadioButton("Static option: on");
 
-        compat6_vmdk_box = new JCheckBox("Compat6 option: on");
+        compat6_vmdk_box = new CheckBox("Compat6 option: on");
 
-        subformat_vmdk_box = new JCheckBox("VMDK subformat option:");
+        subformat_vmdk_box = new CheckBox("VMDK subformat option:");
 
         String[] subformats_vmdk = {"monolithicSparse", "monolithicFlat", "twoGbMaxExtentSparse",
             "twoGbMaxExtentFlat", "streamOptimized"};
 
-        subformat_vmdk_combo = new JComboBox<String>(subformats_vmdk);
+        subformat_vmdk_combo = new ComboBox<String>(subformats_vmdk);
         subformat_vmdk_combo.setSelectedIndex(0);
 
-        subformat_vpc_box = new JRadioButton("VPC subformat option:");
+        subformat_vpc_box = new RadioButton("VPC subformat option:");
 
         String[] subformats_vpc = {"dynamic", "fixed"};
 
-        subformat_vpc_combo = new JComboBox<String>(subformats_vpc);
+        subformat_vpc_combo = new ComboBox<String>(subformats_vpc);
 
     }
 

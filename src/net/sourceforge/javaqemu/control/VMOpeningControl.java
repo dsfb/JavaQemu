@@ -12,7 +12,8 @@ public class VMOpeningControl {
     public VMOpeningControl(View view, EmulationControl myemulation, FileControl myfile) {
         this.mymodel = new VMOpeningModel(myemulation, myfile);
         System.out.println("Building VMOpeningView...");
-        this.myview = new VMOpeningView(view, this.mymodel.getMyfile().getMymodel().getMachineName());
+        this.myview = new VMOpeningView(view, this.mymodel.getMyfile().getMymodel().getMachineName(),
+        	myfile.getMyview().getChoice());
         System.out.println("Built VMOpeningView...");
     }
 

@@ -5,14 +5,16 @@ import java.awt.GridLayout;
 import java.awt.Insets;
 import java.awt.event.ActionListener;
 
-import javax.swing.JButton;
 import javax.swing.JFrame;
-import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
-import javax.swing.JTextArea;
 import javax.swing.JTextField;
+
+import net.sourceforge.javaqemu.view.defined.Button;
+import net.sourceforge.javaqemu.view.defined.Label;
+import net.sourceforge.javaqemu.view.defined.TextArea;
+import net.sourceforge.javaqemu.view.defined.TextField;
 
 public class VMCreationViewPart1 extends JFrame {
 
@@ -22,13 +24,13 @@ public class VMCreationViewPart1 extends JFrame {
 
     private GridLayout gridLayout;
 
-    private JLabel chooseMachineNameLabel;
+    private Label chooseMachineNameLabel;
 
-    private JTextField choooseMachineNameField;
+    private TextField choooseMachineNameField;
 
-    private JButton cancelButton;
+    private Button cancelButton;
 
-    private JButton nextButton;
+    private Button nextButton;
 
     public VMCreationViewPart1() {
         super();
@@ -39,17 +41,17 @@ public class VMCreationViewPart1 extends JFrame {
 
         windowContent.setLayout(gridLayout);
 
-        chooseMachineNameLabel = new JLabel("Choose the name of your new machine:");
+        chooseMachineNameLabel = new Label("Choose the name of your new machine:");
 
-        choooseMachineNameField = new JTextField(0);
+        choooseMachineNameField = new TextField(0);
 
         windowContent.add(chooseMachineNameLabel);
 
         windowContent.add(choooseMachineNameField);
 
-        cancelButton = new JButton("Cancel");
+        cancelButton = new Button("Cancel");
 
-        nextButton = new JButton("Next >");
+        nextButton = new Button("Next >");
 
         windowContent.add(nextButton);
 
@@ -79,7 +81,7 @@ public class VMCreationViewPart1 extends JFrame {
     public void showMessage(String message) {
         JScrollPane scrollPane = new JScrollPane();
         scrollPane.setPreferredSize(new Dimension(500, 500));
-        JTextArea textArea = new JTextArea(message);
+        TextArea textArea = new TextArea(message);
         textArea.setLineWrap(true);
         textArea.setWrapStyleWord(true);
         textArea.setEditable(false);

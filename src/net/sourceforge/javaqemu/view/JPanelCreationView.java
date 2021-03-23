@@ -1,7 +1,6 @@
 package net.sourceforge.javaqemu.view;
 
 import java.awt.Dimension;
-import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
@@ -14,6 +13,8 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
+
+import net.sourceforge.javaqemu.view.defined.Button;
 
 public class JPanelCreationView extends JPanel {
 
@@ -45,11 +46,16 @@ public class JPanelCreationView extends JPanel {
 
     private String ramSize;
 
+    private String filePath;
+
+    private Button showFilePath;
+    
     public JPanelCreationView(String title, JButton createNewVMoption,
             JButton openExistingVMoption, ActionListener listener,
-            JButton useUtilities) {
+            JButton useUtilities, String filePath) {
         super();
         this.setFont(View.getGlobalDefaultFont());
+        this.filePath = filePath;
         this.title = title;
         if (title != null && title.equals("Untitled")) {
             JLabel optionsDescription = new JLabel("Options:");
@@ -152,7 +158,17 @@ public class JPanelCreationView extends JPanel {
 
             this.add(changeMachineConfigurationButton, gridBagConstraints);
 
+            gridBagConstraints.fill = GridBagConstraints.HORIZONTAL;
+            gridBagConstraints.gridx = 0;
             gridBagConstraints.gridy = 6;
+            gridBagConstraints.weightx = 0.5;
+            gridBagConstraints.gridwidth = 2;
+
+            this.showFilePath = new Button("Show the file path of this VM.");
+
+            this.add(this.showFilePath);
+            
+            gridBagConstraints.gridy = 7;
 
             this.add(seeQemuEmulationCommandLineButton, gridBagConstraints);
         }
@@ -186,6 +202,7 @@ public class JPanelCreationView extends JPanel {
             changeMachineConfigurationButton
                     .setActionCommand("ChangeMachineConfiguration");
             saveVMButton.setActionCommand("SaveVM");
+            showFilePath.setActionCommand("ShowFilePath");
             seeQemuEmulationCommandLineButton.setActionCommand("SeeQemuEmulationCommandLine");
         }
     }
@@ -221,6 +238,7 @@ public class JPanelCreationView extends JPanel {
             changeMachineNameButton.addActionListener(listener);
             changeMachineConfigurationButton.addActionListener(listener);
             saveVMButton.addActionListener(listener);
+            showFilePath.addActionListener(listener);
             seeQemuEmulationCommandLineButton.addActionListener(listener);
         }
     }
@@ -238,4 +256,8 @@ public class JPanelCreationView extends JPanel {
     public void setRamSize(String ramSize) {
         this.ramSize = ramSize;
     }
+
+	public String getFilePath() {
+		return filePath;
+	}
 }

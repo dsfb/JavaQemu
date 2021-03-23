@@ -6,13 +6,14 @@ import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.ActionListener;
 
-import javax.swing.JButton;
 import javax.swing.JFrame;
-import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
+
+import net.sourceforge.javaqemu.view.defined.Button;
+import net.sourceforge.javaqemu.view.defined.Label;
 
 public class VMCreationViewEnd extends JFrame {
 
@@ -24,11 +25,11 @@ public class VMCreationViewEnd extends JFrame {
 
     private GridBagConstraints gridBagConstraints;
 
-    private JLabel windowDescription;
+    private Label windowDescription;
 
-    private JButton noButton;
+    private Button noButton;
 
-    private JButton yesButton;
+    private Button yesButton;
 
     public VMCreationViewEnd() {
         super();
@@ -40,11 +41,11 @@ public class VMCreationViewEnd extends JFrame {
 
         windowContent.setLayout(gridBagLayout);
 
-        windowDescription = new JLabel("Do you want to open the new created virtual machine?");
+        windowDescription = new Label("Do you want to open the new created virtual machine?");
 
-        noButton = new JButton("No");
+        noButton = new Button("No");
 
-        yesButton = new JButton("Yes");
+        yesButton = new Button("Yes");
 
         gridBagConstraints.fill = GridBagConstraints.HORIZONTAL;
         gridBagConstraints.gridx = 0;

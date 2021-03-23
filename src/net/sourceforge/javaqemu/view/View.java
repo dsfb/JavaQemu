@@ -9,7 +9,6 @@ import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JMenu;
@@ -19,11 +18,12 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
-import javax.swing.JTextArea;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
 import net.sourceforge.javaqemu.model.Model;
+import net.sourceforge.javaqemu.view.defined.Button;
+import net.sourceforge.javaqemu.view.defined.TextArea;
 
 public class View extends JFrame {
 
@@ -50,9 +50,9 @@ public class View extends JFrame {
 
     private List<JPanelCreationView> myPanels;
 
-    private JButton createNewVMOption;
+    private Button createNewVMOption;
 
-    private JButton openExistingVMOption;
+    private Button openExistingVMOption;
 
     private int activePanel;
 
@@ -60,7 +60,7 @@ public class View extends JFrame {
 
     private JPanel myUntitledJPanel;
 
-    private JButton useUtilities;
+    private Button useUtilities;
 
     private Font defaultFont = new Font("Arial", Font.PLAIN, 12);
 
@@ -109,14 +109,14 @@ public class View extends JFrame {
 
         this.activePanel = 0;
 
-        this.createNewVMOption = new JButton("Create a new virtual machine");
+        this.createNewVMOption = new Button("Create a new virtual machine");
 
-        this.openExistingVMOption = new JButton(
+        this.openExistingVMOption = new Button(
                 "Open a existing virtual machine");
 
-        this.useUtilities = new JButton("Use the available utilities");
+        this.useUtilities = new Button("Use the available utilities");
 
-        JPanelCreationView untitledPanel = makeVMPanel("Untitled");
+        JPanelCreationView untitledPanel = makeVMPanel("Untitled", "");
         myUntitledJPanel = untitledPanel;
 
         this.myPanels.add(this.myPanels.size(), untitledPanel);
@@ -209,8 +209,7 @@ public class View extends JFrame {
     public void showMessage(String message) {
         JScrollPane scrollPane = new JScrollPane();
         scrollPane.setPreferredSize(new Dimension(500, 500));
-        JTextArea textArea = new JTextArea(message);
-        textArea.setFont(this.defaultFont);
+        TextArea textArea = new TextArea(message);
         textArea.setLineWrap(true);
         textArea.setWrapStyleWord(true);
         textArea.setEditable(false);
@@ -236,13 +235,14 @@ public class View extends JFrame {
         this.repaint();
     }
 
-    public JPanelCreationView makeVMPanel(String machineName) {
+    public JPanelCreationView makeVMPanel(String machineName, String filePath) {
         JPanelCreationView panel = null;
         panel = new JPanelCreationView(machineName,
                 this.createNewVMOption,
                 this.openExistingVMOption,
                 this.listener,
-                this.useUtilities);
+                this.useUtilities,
+                filePath);
         return panel;
     }
 
