@@ -8,15 +8,11 @@ This repo is for recording code changes for JavaQemu software.
 
 Mirroring information about JavaQemu:
 
-JavaQemu is a Graphical User Interface Front End for QEMU, written in Java.
-JavaQemu works with JRE 1.7/1.8 and MS Windows OS.
-Since version 0.0.4a15, JavaQemu works with JRE 1.6 or Linux OS/Mac OS, too.
-Since version 0.2.0a10, JavaQemu works only with JRE 1.7+.
+JavaQemu was my GUI Front End project for QEMU, written in Java.
+JavaQemu works with JRE 1.7/1.8 (and more recent JREs) and MS Windows OS.
 
-This project is licensed by the next licenses:
+This project is inactive and was replaced by my new project: KotlEmu!
 
-GNU General Public License version 2.0 (GPLv2)
+Obs.: This project will not be developed anymore, because I am studying Kotlin programming language, and I am making a new project of a GUI Front End project for QEMU, called: KotlEmu. Thank you for your comprehension!
 
-and
-
-GNU Library or Lesser General Public License version 2.0 (LGPLv2).
+The page of my new project is: https://sourceforge.net/projects/kotlemu/
